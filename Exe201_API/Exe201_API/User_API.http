@@ -1,0 +1,44 @@
+### User API Tests
+
+# Lấy thông tin profile của user
+GET {{baseUrl}}/api/user/profile
+Authorization: Bearer {{userToken}}
+
+###
+
+# Cập nhật thông tin profile của user
+PUT {{baseUrl}}/api/user/profile
+Authorization: Bearer {{userToken}}
+Content-Type: application/json
+
+{
+  "name": "Tên Người Dùng Mới",
+  "phone": "0987654321",
+  "address": "Địa chỉ mới, Quận 1, TP. HCM"
+}
+
+### Booking APIs (For User)
+
+# Lấy danh sách booking của user
+GET {{baseUrl}}/api/bookings
+Authorization: Bearer {{userToken}}
+
+###
+
+# Lấy danh sách booking của user theo trạng thái 'pending'
+GET {{baseUrl}}/api/bookings?status=pending
+Authorization: Bearer {{userToken}}
+
+###
+
+# Lấy chi tiết booking của user theo ID
+GET {{baseUrl}}/api/bookings/1
+Authorization: Bearer {{userToken}}
+
+###
+
+# Lấy thống kê dashboard của user
+GET {{baseUrl}}/api/bookings/dashboard-stats
+Authorization: Bearer {{userToken}}
+
+### 

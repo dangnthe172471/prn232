@@ -1,0 +1,91 @@
+### News API Tests
+
+# PUBLIC ROUTES
+
+# Lấy danh sách bài viết (trang 1, 5 bài/trang)
+GET {{baseUrl}}/api/news?page=1&pageSize=5
+Authorization: Bearer {{userToken}}
+
+###
+
+# Lấy danh sách bài viết theo category
+GET {{baseUrl}}/api/news?category=cong-nghe
+Authorization: Bearer {{userToken}}
+
+###
+
+# Lấy danh sách bài viết nổi bật
+GET {{baseUrl}}/api/news/featured
+Authorization: Bearer {{userToken}}
+
+###
+
+# Lấy chi tiết bài viết bằng slug
+GET {{baseUrl}}/api/news/bai-viet-mau-1
+Authorization: Bearer {{userToken}}
+
+###
+
+# Lấy chi tiết bài viết bằng ID
+GET {{baseUrl}}/api/news/1
+Authorization: Bearer {{userToken}}
+
+###
+
+# Lấy danh sách categories
+GET {{baseUrl}}/api/news/categories
+Authorization: Bearer {{userToken}}
+
+###
+
+# Lấy danh sách tags
+GET {{baseUrl}}/api/news/tags
+Authorization: Bearer {{userToken}}
+
+###
+
+# ADMIN ROUTES
+
+# Tạo bài viết mới
+POST {{baseUrl}}/api/news
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "title": "Bài Viết Mới Từ API",
+  "excerpt": "Đây là một bài viết thử nghiệm được tạo ra từ API.",
+  "content": "<h1>Nội dung chi tiết</h1><p>Đây là nội dung chi tiết của bài viết mới.</p>",
+  "categoryId": 1,
+  "readTime": "5 phút",
+  "isFeatured": true,
+  "imageUrl": "https://example.com/image.jpg",
+  "isActive": true,
+  "tagIds": [1, 2]
+}
+
+###
+
+# Cập nhật bài viết
+PUT {{baseUrl}}/api/news/1
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "title": "Bài Viết Đã Được Cập Nhật",
+  "excerpt": "Nội dung tóm tắt đã được cập nhật.",
+  "content": "<h1>Nội dung đã sửa đổi</h1><p>Nội dung chi tiết của bài viết đã được thay đổi.</p>",
+  "categoryId": 2,
+  "readTime": "7 phút",
+  "isFeatured": false,
+  "imageUrl": "https://example.com/new-image.jpg",
+  "isActive": true,
+  "tagIds": [3]
+}
+
+###
+
+# Xóa bài viết (Soft delete)
+DELETE {{baseUrl}}/api/news/1
+Authorization: Bearer {{adminToken}}
+
+### 

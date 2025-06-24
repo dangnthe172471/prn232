@@ -1,0 +1,34 @@
+@model CleanView.Models.LoginViewModel
+@{
+    ViewData["Title"] = "Đăng nhập";
+}
+<div class="min-vh-100 bg-light d-flex flex-column align-items-center justify-content-center py-5">
+    <div class="bg-gradient p-4 rounded-circle mb-4 d-flex align-items-center justify-content-center" style="width:80px;height:80px;background:linear-gradient(90deg,#2563eb,#9333ea);">
+        <i class="bi bi-heart-fill text-white fs-1"></i>
+    </div>
+    <h1 class="fw-bold mb-2" style="background:linear-gradient(90deg,#2563eb,#9333ea);-webkit-background-clip:text;color:transparent;">Đăng Nhập</h1>
+    <p class="text-secondary mb-4">Chào mừng bạn quay trở lại CareU!</p>
+    <div class="card shadow border-0 p-4" style="max-width:400px;width:100%">
+        @if (ViewData.ModelState[""]?.Errors.Count > 0)
+        {
+            <div class="alert alert-danger">@ViewData.ModelState[""]?.Errors[0].ErrorMessage</div>
+        }
+        <form asp-action="Login" method="post" class="mb-3">
+            <div class="mb-3">
+                <label asp-for="Username" class="form-label">Email hoặc Tên đăng nhập</label>
+                <input asp-for="Username" class="form-control" placeholder="Nhập email hoặc tên đăng nhập" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label">Mật khẩu</label>
+                <input asp-for="Password" class="form-control" placeholder="Nhập mật khẩu" type="password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Đăng Nhập</button>
+        </form>
+        <div class="text-center">
+            <span class="text-secondary">Chưa có tài khoản?</span>
+            <a href="/Auth/Register" class="text-primary ms-2">Đăng ký ngay</a>
+        </div>
+    </div>
+</div> 

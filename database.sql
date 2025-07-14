@@ -202,7 +202,7 @@ INSERT INTO TimeSlots (TimeRange) VALUES
 
 -- Admin
 INSERT INTO Users (Name, Email, Password, Phone, Address, Role, Status, EmailVerified) VALUES
-(N'Admin', 'admin@gmail.com', '123456', '0901122334', N'Phú Mỹ, Thạch Hòa, Thạch Thất, Hà Nội', 'admin', 'active', 1);
+(N'Admin CareU', 'admin@gmail.com', '123456', '0901122334', N'Thôn 1, Thạch Hòa, Thạch Thất, Hà Nội', 'admin', 'active', 1);
 
 -- 4 Cleaners
 INSERT INTO Users (Name, Email, Password, Phone, Address, Role, Status,Experience, EmailVerified)
@@ -260,31 +260,31 @@ INSERT INTO NewsArticles (Title, Slug, Excerpt, Content, CategoryId, AuthorId, P
 '10-meo-don-nha-nhanh-chong-va-hieu-qua', 
 N'Khám phá những bí quyết giúp bạn dọn dẹp nhà cửa một cách nhanh chóng và tiết kiệm thời gian...', 
 N'<h2>Dọn dẹp nhà cửa không cần phải mất cả ngày</h2><p>Với những mẹo hay này, bạn có thể có một ngôi nhà sạch sẽ chỉ trong vài giờ...</p>', 
-1, 1, '2024-01-15', N'5 phút đọc', 1250, 89, 23, 1, '/placeholder.svg?height=400&width=800'),
+1, 1, '2025-05-29', N'5 phút đọc', 1250, 89, 23, 1, '/placeholder.svg?height=400&width=800'),
 
 (N'Tác Hại Của Bụi Bẩn Đến Sức Khỏe Gia Đình', 
 'tac-hai-cua-bui-ban-den-suc-khoe-gia-dinh', 
 N'Tìm hiểu về những tác hại nghiêm trọng của bụi bẩn và cách bảo vệ sức khỏe gia đình bạn...', 
 N'<h2>Bụi bẩn không chỉ làm mất thẩm mỹ</h2><p>Bụi bẩn còn ảnh hưởng nghiêm trọng đến sức khỏe, đặc biệt là trẻ em và người già...</p>', 
-2, 2, '2024-01-12', N'7 phút đọc', 980, 45, 12, 0, '/placeholder.svg?height=400&width=800'),
+2, 2, '2025-06-06', N'7 phút đọc', 980, 45, 12, 0, '/placeholder.svg?height=400&width=800'),
 
 (N'CareU Ra Mắt Ứng Dụng Mobile Mới', 
 'careu-ra-mat-ung-dung-mobile-moi', 
 N'Ứng dụng CareU phiên bản mới với nhiều tính năng thông minh, giúp đặt lịch dễ dàng hơn bao giờ hết...', 
 N'<h2>Ứng dụng CareU mới</h2><p>Được tích hợp AI để đề xuất dịch vụ phù hợp và tối ưu hóa lịch trình làm việc...</p>', 
-4, 3, '2024-01-10', N'3 phút đọc', 2100, 120, 35, 1, '/placeholder.svg?height=400&width=800'),
+4, 3, '2025-06-13', N'3 phút đọc', 2100, 120, 35, 1, '/placeholder.svg?height=400&width=800'),
 
 (N'Công Nghệ Robot Dọn Dẹp: Tương Lai Đã Đến', 
 'cong-nghe-robot-don-dep-tuong-lai-da-den', 
 N'Khám phá những công nghệ robot dọn dẹp tiên tiến nhất hiện nay và xu hướng phát triển trong tương lai...', 
 N'<h2>Robot dọn dẹp đang trở thành xu hướng mới</h2><p>Giúp tiết kiệm thời gian và nâng cao chất lượng cuộc sống...</p>', 
-3, 1, '2024-01-08', N'6 phút đọc', 750, 32, 8, 0, '/placeholder.svg?height=400&width=800'),
+3, 1, '2024-06-20', N'6 phút đọc', 750, 32, 8, 0, '/placeholder.svg?height=400&width=800'),
 
 (N'Khuyến Mãi Tháng 1: Giảm 30% Dịch Vụ Dọn Cuối Năm', 
 'khuyen-mai-thang-1-giam-30-dich-vu-don-cuoi-nam', 
 N'Chương trình khuyến mãi đặc biệt dành cho khách hàng mới và cũ trong tháng 1/2024...', 
 N'<h2>Nhân dịp đầu năm mới</h2><p>CareU triển khai chương trình khuyến mãi hấp dẫn với mức giảm giá lên đến 30%...</p>', 
-5, 3, '2024-01-05', N'2 phút đọc', 3200, 75, 18, 0, '/placeholder.svg?height=400&width=800');
+5, 3, '2025-06-28', N'2 phút đọc', 3200, 75, 18, 0, '/placeholder.svg?height=400&width=800');
 
 -- NewsArticleTags
 INSERT INTO NewsArticleTags (ArticleId, TagId) VALUES

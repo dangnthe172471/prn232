@@ -76,11 +76,6 @@ export default function ForgotPasswordPage() {
             setTimeout(() => {
                 router.push("/login");
             }, 2000);
-            setStep(1);
-            setEmail("");
-            setPin("");
-            setNewPassword("");
-            setConfirmPassword("");
         } catch (err: any) {
             setError(err.message);
         } finally {

@@ -205,12 +205,12 @@ INSERT INTO Users (Name, Email, Password, Phone, Address, Role, Status, EmailVer
 (N'Admin', 'admin@gmail.com', '123456', '0901122334', N'Phú Mỹ, Thạch Hòa, Thạch Thất, Hà Nội', 'admin', 'active', 1);
 
 -- 4 Cleaners
-INSERT INTO Users (Name, Email, Password, Phone, Address, Role, Status, EmailVerified)
+INSERT INTO Users (Name, Email, Password, Phone, Address, Role, Status,Experience, EmailVerified)
 VALUES
-(N'Trần Trang', 'ntmtrang123@gmail.com', '123456', '0904567890', N'Thôn 1, Thạch Hòa, Thạch Thất, Hà Nội', 'cleaner', 'active', 1),
-(N'Lê Tường Vy', 'letuongvy1806@gmail.com', '123456', '0812340986', N'Thôn 2, Thạch Hòa, Thạch Thất, Hà Nội', 'cleaner', 'active', 1),
-(N'Nguyễn Hoàng Anh', 'nguyenhoanganh2n6@gmail.com', '123456', '0398765431', N'Thôn 3, Thạch Hòa, Thạch Thất, Hà Nội', 'cleaner', 'active', 1),
-(N'Nguyễn Thu Trang', 'ntmtrang126@gmail.com', '123456', '0912345671', N'Thôn 4, Thạch Hòa, Thạch Thất, Hà Nội', 'cleaner', 'active', 1);
+(N'Trần Trang', 'ntmtrang123@gmail.com', '123456', '0904567890', N'Thôn 1, Thạch Hòa, Thạch Thất, Hà Nội', 'cleaner', 'active',N'Dưới 1 năm', 1),
+(N'Lê Tường Vy', 'letuongvy1806@gmail.com', '123456', '0812340986', N'Thôn 2, Thạch Hòa, Thạch Thất, Hà Nội', 'cleaner', 'active','1-3 năm', 1),
+(N'Nguyễn Hoàng Anh', 'nguyenhoanganh2n6@gmail.com', '123456', '0398765431', N'Thôn 3, Thạch Hòa, Thạch Thất, Hà Nội', 'cleaner', 'active',N'1-3 năm', 1),
+(N'Nguyễn Thu Trang', 'ntmtrang126@gmail.com', '123456', '0912345671', N'Thôn 4, Thạch Hòa, Thạch Thất, Hà Nội', 'cleaner', 'active',N'Dưới 1 năm', 1);
 
 -- 21 Users (role: user)
 INSERT INTO Users (Name, Email, Password, Phone, Address, Role, Status, EmailVerified)

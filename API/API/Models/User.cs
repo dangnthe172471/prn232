@@ -23,6 +23,12 @@ public partial class User
 
     public string? Experience { get; set; }
 
+    public bool? EmailVerified { get; set; }
+
+    public string? EmailVerificationToken { get; set; }
+
+    public DateTime? EmailVerificationSentAt { get; set; }
+
     public DateTime? CreatedAt { get; set; }
 
     public DateTime? UpdatedAt { get; set; }

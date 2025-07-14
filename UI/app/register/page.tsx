@@ -57,12 +57,12 @@ export default function RegisterPage() {
       await MySwal.fire({
         icon: "success",
         title: "Đăng ký thành công!",
-        text: "Bạn sẽ được chuyển đến trang đăng nhập.",
-        timer: 2000,
-        showConfirmButton: false,
+        html: "Vui lòng kiểm tra email để xác thực tài khoản. <br/>Link xác thực chỉ có hiệu lực trong 15 phút.",
+        timer: 4000,
+        showConfirmButton: true,
       })
-
-      router.push("/login")
+      // Không chuyển sang login ngay, chờ xác thực email
+      // router.push("/login")
     } catch (err: any) {
       await MySwal.fire({
         icon: "error",

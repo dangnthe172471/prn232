@@ -21,6 +21,14 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<ReviewResponseDto>> CreateReview([FromBody] CreateReviewRequestDto request)
         {
+            if (request == null)
+                return BadRequest(new { message = "Dữ liệu không hợp lệ" });
+            if (request.BookingId <= 0)
+                return BadRequest(new { message = "BookingId không hợp lệ" });
+            if (request.Rating < 1 || request.Rating > 5)
+                return BadRequest(new { message = "Rating phải từ 1 đến 5" });
+            if (request.Comment != null && request.Comment.Length > 500)
+                return BadRequest(new { message = "Comment tối đa 500 ký tự" });
             try
             {
                 var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
@@ -45,6 +53,8 @@ namespace API.Controllers
         [HttpGet("check/{bookingId}")]
         public async Task<ActionResult<bool>> CheckUserReviewedBooking(int bookingId)
         {
+            if (bookingId <= 0)
+                return BadRequest(new { message = "BookingId không hợp lệ" });
             try
             {
                 var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
@@ -65,6 +75,8 @@ namespace API.Controllers
         [HttpGet("booking/{bookingId}")]
         public async Task<ActionResult<ReviewResponseDto>> GetReviewByBookingId(int bookingId)
         {
+            if (bookingId <= 0)
+                return BadRequest(new { message = "BookingId không hợp lệ" });
             try
             {
                 var review = await _reviewService.GetReviewByBookingIdAsync(bookingId);
@@ -84,6 +96,14 @@ namespace API.Controllers
         [HttpPut("{bookingId}")]
         public async Task<ActionResult<ReviewResponseDto>> UpdateReview(int bookingId, [FromBody] CreateReviewRequestDto request)
         {
+            if (bookingId <= 0)
+                return BadRequest(new { message = "BookingId không hợp lệ" });
+            if (request == null)
+                return BadRequest(new { message = "Dữ liệu không hợp lệ" });
+            if (request.Rating < 1 || request.Rating > 5)
+                return BadRequest(new { message = "Rating phải từ 1 đến 5" });
+            if (request.Comment != null && request.Comment.Length > 500)
+                return BadRequest(new { message = "Comment tối đa 500 ký tự" });
             try
             {
                 var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");

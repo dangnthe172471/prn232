@@ -61,8 +61,6 @@ export default function RegisterPage() {
         timer: 4000,
         showConfirmButton: true,
       })
-      // Không chuyển sang login ngay, chờ xác thực email
-      // router.push("/login")
     } catch (err: any) {
       await MySwal.fire({
         icon: "error",

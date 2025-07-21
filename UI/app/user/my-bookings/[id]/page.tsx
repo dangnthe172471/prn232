@@ -31,7 +31,6 @@ import { reviewApi, CreateReviewRequest } from "@/app/api/services/reviewApi"
 import Header from "@/components/header"
 import { formatPhoneNumber } from "@/lib/utils"
 
-// Interface cho dữ liệu từ API
 interface BookingDetailDto {
   id: number;
   serviceName: string;

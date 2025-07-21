@@ -20,7 +20,6 @@ export default function ForgotPasswordPage() {
     const [resendStatus, setResendStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
     const [resendMsg, setResendMsg] = useState("");
 
-    // Bước 1: Gửi mã PIN
     const handleSendPin = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
@@ -37,7 +36,6 @@ export default function ForgotPasswordPage() {
         }
     };
 
-    // Bước 2: Xác thực mã PIN
     const handleVerifyPin = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
@@ -54,7 +52,6 @@ export default function ForgotPasswordPage() {
         }
     };
 
-    // Bước 3: Đặt lại mật khẩu
     const handleResetPassword = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
@@ -83,7 +80,6 @@ export default function ForgotPasswordPage() {
         }
     };
 
-    // Gửi lại mã PIN
     const handleResendPin = async () => {
         setResendStatus("sending");
         setResendMsg("");

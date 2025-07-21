@@ -106,7 +106,6 @@ export default function BookingPage() {
     setWards([])
     updateFullAddress(provinceCode, "", "", formData.detailedAddress)
 
-    // Load districts based on selected province
     const provinceDistricts = getDistrictsByProvince(provinceCode)
     setDistricts(provinceDistricts)
   }
@@ -117,7 +116,6 @@ export default function BookingPage() {
     setWardSearch("")
     updateFullAddress(selectedProvince, districtCode, "", formData.detailedAddress)
 
-    // Load wards based on selected district
     const districtWards = getWardsByDistrict(districtCode)
     setWards(districtWards)
   }
@@ -129,7 +127,6 @@ export default function BookingPage() {
 
   const updateFullAddress = (provinceCode: string, districtCode: string, wardCode: string, detailedAddr: string) => {
     const fullAddress = getFullAddressString(provinceCode, districtCode, wardCode, detailedAddr)
-    // Chỉ lấy phần từ phường/xã trở lên (bỏ địa chỉ chi tiết)
     const addressParts = fullAddress.split(", ")
     const addressWithoutDetail = detailedAddr ? addressParts.slice(1).join(", ") : addressParts.join(", ")
     handleInputChange("address", addressWithoutDetail)
@@ -181,7 +178,6 @@ export default function BookingPage() {
     }
   }
 
-  // Filter functions
   const filteredProvinces = vietnamProvinces.filter((province) =>
     province.name.toLowerCase().includes(provinceSearch.toLowerCase()),
   )
@@ -192,7 +188,6 @@ export default function BookingPage() {
 
   const filteredWards = wards.filter((ward) => ward.name.toLowerCase().includes(wardSearch.toLowerCase()))
 
-  // Helper function to get icon for ward type
   const getWardIcon = (type: string) => {
     switch (type) {
       case "phuong":

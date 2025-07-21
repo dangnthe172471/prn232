@@ -66,7 +66,7 @@ export default function CleanerDashboard() {
 
   const acceptJob = async (jobId: number) => {
     try {
-      await acceptCleanerJob(jobId, user.token) // gọi đúng api
+      await acceptCleanerJob(jobId, user.token)
       await loadJobs(user.token)
     } catch (err) {
       console.error("Lỗi khi nhận việc:", err)

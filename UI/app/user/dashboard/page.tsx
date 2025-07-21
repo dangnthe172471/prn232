@@ -52,7 +52,7 @@ export default function UserDashboard() {
     const userData = JSON.parse(currentUser)
     setUser(userData)
 
-    const token = userData.token // ✅ dùng đúng token đã lưu trong currentUser
+    const token = userData.token
 
     const fetchData = async () => {
       try {
@@ -86,7 +86,6 @@ export default function UserDashboard() {
         token
       )
 
-      // Hiển thị thông báo Swal và đợi 2 giây trước khi logout
       await Swal.fire({
         icon: "success",
         title: "Đổi mật khẩu thành công",
@@ -95,7 +94,6 @@ export default function UserDashboard() {
         showConfirmButton: false,
       })
 
-      // Xoá localStorage và chuyển hướng về trang login
       localStorage.removeItem("token")
       localStorage.removeItem("currentUser")
       router.push("/login")

@@ -1,14 +1,6 @@
-using System;
-using System.Threading.Tasks;
 using API.DTOs;
 using API.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using System.Linq;
 
 namespace API.Services
 {
@@ -52,58 +44,6 @@ namespace API.Services
 			};
 		}
 
-		private async Task SendVerificationEmailAsync(User user, string token)
-		{
-			var verifyUrl = $"{_config["FrontendUrl"]}/verify-email?token={token}";
-			var subject = "Xác thực email đăng ký CareU";
-			var body = $@"
-            <div style='font-family: Arial, sans-serif; background: #f6f8fa; padding: 32px;'>
-                <div style='max-width: 480px; margin: auto; background: #fff; border-radius: 16px; box-shadow: 0 4px 24px #0002; overflow: hidden;'>
-                    <div style='background: linear-gradient(90deg, #2563eb 0%, #9333ea 100%); padding: 32px 0 20px 0; text-align: center;'>
-                        <img src='https://i.imgur.com/8Km9tLL.png' alt='CareU Logo' style='height: 56px; margin-bottom: 12px;' />
-                        <h2 style='color: #fff; margin: 0; font-size: 2rem; letter-spacing: 1px;'>Xác thực email của bạn</h2>
-                    </div>
-                    <div style='padding: 36px 28px 28px 28px;'>
-                        <p style='font-size: 1.15rem; color: #222; margin-bottom: 18px;'>Chào <b>{user.Name}</b>,</p>
-                        <p style='color: #444; margin-bottom: 24px;'>Cảm ơn bạn đã đăng ký tài khoản tại <b>CareU</b>!<br>Vui lòng nhấn nút bên dưới để xác thực email và bắt đầu sử dụng dịch vụ.</p>
-                        <div style='text-align: center; margin: 36px 0;'>
-                            <a href='{verifyUrl}' style='background: linear-gradient(90deg, #2563eb 0%, #9333ea 100%); color: #fff; text-decoration: none; padding: 16px 40px; border-radius: 10px; font-size: 1.15rem; font-weight: bold; display: inline-block; box-shadow: 0 2px 8px #9333ea33;'>Xác thực email</a>
-                        </div>
-                        <p style='color: #888; font-size: 1rem; margin-bottom: 0;'>Nếu bạn không đăng ký tài khoản, vui lòng bỏ qua email này.</p>
-                        <hr style='margin: 36px 0 16px 0; border: none; border-top: 1px solid #eee;'>
-                        <div style='color: #888; font-size: 1rem;'>Trân trọng,<br>Đội ngũ <b>CareU</b></div>
-                    </div>
-                </div>
-            </div>";
-			await _emailService.SendEmailAsync(user.Email, subject, body);
-		}
-
-		private async Task SendWelcomeEmailAsync(User user)
-		{
-			var subject = "Chào mừng bạn đến với CareU!";
-			var body = $@"
-            <div style='font-family: Arial, sans-serif; background: #f6f8fa; padding: 32px;'>
-                <div style='max-width: 480px; margin: auto; background: #fff; border-radius: 16px; box-shadow: 0 4px 24px #0002; overflow: hidden;'>
-                    <div style='background: linear-gradient(90deg, #2563eb 0%, #9333ea 100%); padding: 32px 0 20px 0; text-align: center;'>
-                        <img src='https://i.imgur.com/8Km9tLL.png' alt='CareU Logo' style='height: 56px; margin-bottom: 12px;' />
-                        <h2 style='color: #fff; margin: 0; font-size: 2rem; letter-spacing: 1px;'>Chào mừng đến với CareU!</h2>
-                    </div>
-                    <div style='padding: 36px 28px 28px 28px;'>
-                        <p style='font-size: 1.15rem; color: #222; margin-bottom: 18px;'>Xin chào <b>{user.Name}</b>,</p>
-                        <p style='color: #444; margin-bottom: 18px;'>Cảm ơn bạn đã đăng ký tài khoản tại <b>CareU</b>!<br>Chúng tôi rất vui được đồng hành cùng bạn trên hành trình chăm sóc tổ ấm.</p>
-                        <ul style='color: #444; font-size: 1rem; margin: 16px 0 24px 16px; padding-left: 18px;'>
-                            <li>Đặt lịch dọn dẹp nhanh chóng, tiện lợi</li>
-                            <li>Đội ngũ nhân viên chuyên nghiệp, tận tâm</li>
-                            <li>Ưu đãi hấp dẫn dành riêng cho thành viên mới</li>
-                        </ul>
-                        <p style='color: #444;'>Hãy xác thực email để bắt đầu sử dụng dịch vụ!</p>
-                        <hr style='margin: 36px 0 16px 0; border: none; border-top: 1px solid #eee;'>
-                        <div style='color: #888; font-size: 1rem;'>Trân trọng,<br>Đội ngũ <b>CareU</b></div>
-                    </div>
-                </div>
-            </div>";
-			await _emailService.SendEmailAsync(user.Email, subject, body);
-		}
 
 		public async Task<LoginResponseDto> RegisterAsync(RegisterRequestDto request)
 		{
@@ -151,9 +91,9 @@ namespace API.Services
 			if (string.IsNullOrWhiteSpace(request.Email) || string.IsNullOrWhiteSpace(request.OldPassword) || string.IsNullOrWhiteSpace(request.NewPassword))
 				throw new ArgumentException("Thông tin đổi mật khẩu không hợp lệ");
 			var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
-			if (user == null || user.Password != request.OldPassword) // Note: In a real app, compare hashed passwords!
+			if (user == null || !BCrypt.Net.BCrypt.Verify(request.OldPassword, user.Password))
 				throw new UnauthorizedAccessException("Email hoặc mật khẩu cũ không đúng");
-			user.Password = request.NewPassword; // Note: Hash this new password!
+			user.Password = BCrypt.Net.BCrypt.HashPassword(request.NewPassword);
 			user.UpdatedAt = DateTime.UtcNow;
 			_context.Users.Update(user);
 			await _context.SaveChangesAsync();
@@ -231,7 +171,58 @@ namespace API.Services
 			await _emailService.SendEmailAsync(user.Email, subject, body);
 			return true;
 		}
+		private async Task SendVerificationEmailAsync(User user, string token)
+		{
+			var verifyUrl = $"{_config["FrontendUrl"]}/verify-email?token={token}";
+			var subject = "Xác thực email đăng ký CareU";
+			var body = $@"
+            <div style='font-family: Arial, sans-serif; background: #f6f8fa; padding: 32px;'>
+                <div style='max-width: 480px; margin: auto; background: #fff; border-radius: 16px; box-shadow: 0 4px 24px #0002; overflow: hidden;'>
+                    <div style='background: linear-gradient(90deg, #2563eb 0%, #9333ea 100%); padding: 32px 0 20px 0; text-align: center;'>
+                        <img src='https://i.imgur.com/8Km9tLL.png' alt='CareU Logo' style='height: 56px; margin-bottom: 12px;' />
+                        <h2 style='color: #fff; margin: 0; font-size: 2rem; letter-spacing: 1px;'>Xác thực email của bạn</h2>
+                    </div>
+                    <div style='padding: 36px 28px 28px 28px;'>
+                        <p style='font-size: 1.15rem; color: #222; margin-bottom: 18px;'>Chào <b>{user.Name}</b>,</p>
+                        <p style='color: #444; margin-bottom: 24px;'>Cảm ơn bạn đã đăng ký tài khoản tại <b>CareU</b>!<br>Vui lòng nhấn nút bên dưới để xác thực email và bắt đầu sử dụng dịch vụ.</p>
+                        <div style='text-align: center; margin: 36px 0;'>
+                            <a href='{verifyUrl}' style='background: linear-gradient(90deg, #2563eb 0%, #9333ea 100%); color: #fff; text-decoration: none; padding: 16px 40px; border-radius: 10px; font-size: 1.15rem; font-weight: bold; display: inline-block; box-shadow: 0 2px 8px #9333ea33;'>Xác thực email</a>
+                        </div>
+                        <p style='color: #888; font-size: 1rem; margin-bottom: 0;'>Nếu bạn không đăng ký tài khoản, vui lòng bỏ qua email này.</p>
+                        <hr style='margin: 36px 0 16px 0; border: none; border-top: 1px solid #eee;'>
+                        <div style='color: #888; font-size: 1rem;'>Trân trọng,<br>Đội ngũ <b>CareU</b></div>
+                    </div>
+                </div>
+            </div>";
+			await _emailService.SendEmailAsync(user.Email, subject, body);
+		}
 
+		private async Task SendWelcomeEmailAsync(User user)
+		{
+			var subject = "Chào mừng bạn đến với CareU!";
+			var body = $@"
+            <div style='font-family: Arial, sans-serif; background: #f6f8fa; padding: 32px;'>
+                <div style='max-width: 480px; margin: auto; background: #fff; border-radius: 16px; box-shadow: 0 4px 24px #0002; overflow: hidden;'>
+                    <div style='background: linear-gradient(90deg, #2563eb 0%, #9333ea 100%); padding: 32px 0 20px 0; text-align: center;'>
+                        <img src='https://i.imgur.com/8Km9tLL.png' alt='CareU Logo' style='height: 56px; margin-bottom: 12px;' />
+                        <h2 style='color: #fff; margin: 0; font-size: 2rem; letter-spacing: 1px;'>Chào mừng đến với CareU!</h2>
+                    </div>
+                    <div style='padding: 36px 28px 28px 28px;'>
+                        <p style='font-size: 1.15rem; color: #222; margin-bottom: 18px;'>Xin chào <b>{user.Name}</b>,</p>
+                        <p style='color: #444; margin-bottom: 18px;'>Cảm ơn bạn đã đăng ký tài khoản tại <b>CareU</b>!<br>Chúng tôi rất vui được đồng hành cùng bạn trên hành trình chăm sóc tổ ấm.</p>
+                        <ul style='color: #444; font-size: 1rem; margin: 16px 0 24px 16px; padding-left: 18px;'>
+                            <li>Đặt lịch dọn dẹp nhanh chóng, tiện lợi</li>
+                            <li>Đội ngũ nhân viên chuyên nghiệp, tận tâm</li>
+                            <li>Ưu đãi hấp dẫn dành riêng cho thành viên mới</li>
+                        </ul>
+                        <p style='color: #444;'>Hãy xác thực email để bắt đầu sử dụng dịch vụ!</p>
+                        <hr style='margin: 36px 0 16px 0; border: none; border-top: 1px solid #eee;'>
+                        <div style='color: #888; font-size: 1rem;'>Trân trọng,<br>Đội ngũ <b>CareU</b></div>
+                    </div>
+                </div>
+            </div>";
+			await _emailService.SendEmailAsync(user.Email, subject, body);
+		}
 		private string GeneratePasswordResetPinHtml(string pin, string? userName = null)
 		{
 			return $@"

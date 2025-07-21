@@ -20,7 +20,6 @@ namespace API.Services
         public async Task<AdminDashboardStatsDto> GetDashboardStatsAsync()
         {
             var now = DateTime.UtcNow;
-            var sevenDaysAgo = now.AddDays(-7);
 
             var stats = new AdminDashboardStatsDto
             {
@@ -31,20 +30,18 @@ namespace API.Services
                 TotalBills = await _context.Payments.CountAsync(),
                 PendingCleaners = await _context.Users.CountAsync(u => u.Role == "cleaner" && u.Status == "pending"),
                 ActiveCleaners = await _context.Users.CountAsync(u => u.Role == "cleaner" && u.Status == "active"),
-                RecentBookings = await _context.Bookings.CountAsync(b => b.CreatedAt >= sevenDaysAgo),
+                RecentBookings = await _context.Bookings.CountAsync(),
                 RecentRevenue = await _context.Bookings
-                    .Where(b => b.Status == "completed" && b.CreatedAt >= sevenDaysAgo)
+                    .Where(b => b.Status == "completed")
                     .SumAsync(b => b.TotalPrice)
             };
 
-            // Bookings by status
             var statuses = new[] { "pending", "confirmed", "in_progress", "completed", "cancelled" };
             foreach (var status in statuses)
             {
                 stats.BookingsByStatus[status] = await _context.Bookings.CountAsync(b => b.Status == status);
             }
 
-            // Revenue by service type
             var serviceTypes = await _context.Services.Select(s => s.Name).ToListAsync();
             foreach (var serviceType in serviceTypes)
             {

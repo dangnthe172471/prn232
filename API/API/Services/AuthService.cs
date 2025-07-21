@@ -33,7 +33,7 @@ namespace API.Services
 				throw new ArgumentException("Email và mật khẩu không được để trống");
 
 			var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
-			if (user == null || user.Password != request.Password)
+			if (user == null || !BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
 				throw new UnauthorizedAccessException("Email hoặc mật khẩu không đúng");
 
 			if (!(user.EmailVerified ?? false))
@@ -116,7 +116,7 @@ namespace API.Services
 			{
 				Name = request.Name,
 				Email = request.Email,
-				Password = request.Password, // Note: In a real app, hash this password!
+				Password = BCrypt.Net.BCrypt.HashPassword(request.Password), // Note: In a real app, hash this password!
 				Phone = request.Phone,
 				Address = request.Address,
 				Role = request.Role,

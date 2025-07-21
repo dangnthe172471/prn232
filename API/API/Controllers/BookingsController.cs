@@ -106,11 +106,15 @@ namespace API.Controllers
             }
             try
             {
-                var userId = GetCurrentUserId();
-                var booking = await _bookingService.GetUserBookingByIdAsync(id, userId);
+                var booking = await _bookingService.GetUserBookingByIdAsync(id, -1);
                 if (booking == null)
                 {
-                    return NotFound(new { message = "Không tìm thấy đơn hàng hoặc bạn không có quyền truy cập." });
+                    return NotFound(new { message = "Không tìm thấy đơn hàng." });
+                }
+                var userId = GetCurrentUserId();
+                if (booking.UserName == null || booking.UserName != User.Identity?.Name)
+                {
+                    return Unauthorized(new { message = "Bạn không có quyền truy cập đơn hàng này." });
                 }
                 return Ok(booking);
             }

@@ -65,13 +65,11 @@ export interface BillDto {
 }
 
 export const adminApi = {
-    // Lấy thống kê dashboard
     getDashboardStats: async (token: string): Promise<AdminDashboardStatsDto> => {
         const response = await fetch(`${API_BASE_URL}/api/admin/dashboard-stats`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,
-                "ngrok-skip-browser-warning": "true",
                 'Content-Type': 'application/json',
             },
         });
@@ -86,7 +84,6 @@ export const adminApi = {
         return response.json();
     },
 
-    // Lấy danh sách tất cả booking
     getAllBookings: async (
         token: string,
         page: number = 1,
@@ -106,7 +103,6 @@ export const adminApi = {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,
-                "ngrok-skip-browser-warning": "true",
                 'Content-Type': 'application/json',
             },
         });
@@ -123,13 +119,11 @@ export const adminApi = {
         };
     },
 
-    // Lấy chi tiết booking theo ID
     getBookingById: async (token: string, id: number): Promise<BookingDto> => {
         const response = await fetch(`${API_BASE_URL}/api/admin/bookings/${id}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,
-                "ngrok-skip-browser-warning": "true",
                 'Content-Type': 'application/json',
             },
         });
@@ -144,13 +138,11 @@ export const adminApi = {
         return response.json();
     },
 
-    // Cập nhật trạng thái booking
     updateBookingStatus: async (token: string, id: number, status: string): Promise<BookingDto> => {
         const response = await fetch(`${API_BASE_URL}/api/admin/bookings/${id}/status`, {
             method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${token}`,
-                "ngrok-skip-browser-warning": "true",
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ status }),
@@ -166,14 +158,12 @@ export const adminApi = {
         return response.json();
     },
 
-    // Lấy danh sách tất cả khách hàng
     getAllCustomers: async (token: string): Promise<CustomerDto[]> => {
         const response = await fetch(`${API_BASE_URL}/api/admin/customers`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
-                "ngrok-skip-browser-warning": "true",
             },
         });
 
@@ -184,14 +174,12 @@ export const adminApi = {
         return response.json();
     },
 
-    // Lấy danh sách tất cả nhân viên
     getAllCleaners: async (token: string): Promise<CleanerDto[]> => {
         const response = await fetch(`${API_BASE_URL}/api/admin/cleaners`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
-                "ngrok-skip-browser-warning": "true",
             },
         });
 
@@ -202,14 +190,12 @@ export const adminApi = {
         return response.json();
     },
 
-    // Cập nhật trạng thái nhân viên
     updateCleanerStatus: async (token: string, id: number, status: string): Promise<CleanerDto> => {
         const response = await fetch(`${API_BASE_URL}/api/admin/cleaners/${id}/status`, {
             method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
-                "ngrok-skip-browser-warning": "true",
             },
             body: JSON.stringify({ status }),
         });
@@ -224,14 +210,12 @@ export const adminApi = {
         return response.json();
     },
 
-    // Lấy danh sách tất cả hóa đơn
     getAllBills: async (token: string): Promise<BillDto[]> => {
         const response = await fetch(`${API_BASE_URL}/api/admin/bills`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
-                "ngrok-skip-browser-warning": "true",
             },
         });
 

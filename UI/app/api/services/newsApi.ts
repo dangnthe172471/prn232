@@ -67,7 +67,6 @@ export interface PagedResult<T> {
 }
 
 export const newsApi = {
-    // Public APIs
     getArticles: async (page: number = 1, pageSize: number = 10, category?: string, tag?: string): Promise<PagedResult<NewsArticleDto>> => {
         const params = new URLSearchParams({
             page: page.toString(),
@@ -80,7 +79,6 @@ export const newsApi = {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                "ngrok-skip-browser-warning": "true",
             },
         });
 
@@ -96,7 +94,6 @@ export const newsApi = {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                "ngrok-skip-browser-warning": "true",
             },
         });
 
@@ -112,7 +109,6 @@ export const newsApi = {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                "ngrok-skip-browser-warning": "true",
             },
         });
 
@@ -128,7 +124,6 @@ export const newsApi = {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                "ngrok-skip-browser-warning": "true",
             },
         });
 
@@ -144,7 +139,6 @@ export const newsApi = {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                "ngrok-skip-browser-warning": "true",
             },
         });
 
@@ -165,7 +159,6 @@ export const newsApi = {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
-                "ngrok-skip-browser-warning": "true",
             },
             body: JSON.stringify(data),
         });
@@ -186,7 +179,6 @@ export const newsApi = {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
-                "ngrok-skip-browser-warning": "true",
             },
             body: JSON.stringify(data),
         });
@@ -210,7 +202,6 @@ export const newsApi = {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
-                "ngrok-skip-browser-warning": "true",
             },
         });
 

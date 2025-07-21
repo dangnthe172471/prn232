@@ -43,7 +43,6 @@ export async function register(request: RegisterRequestDto): Promise<any> {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "ngrok-skip-browser-warning": "true",
         },
         body: JSON.stringify(request),
     })
@@ -61,7 +60,6 @@ export async function verifyEmail(token: string): Promise<any> {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "ngrok-skip-browser-warning": "true",
         },
     })
     if (!res.ok) {
@@ -76,7 +74,6 @@ export async function resendVerificationEmail(email: string): Promise<any> {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "ngrok-skip-browser-warning": "true",
         },
     })
     if (!res.ok) {
@@ -95,7 +92,6 @@ export const changePassword = async (
         headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
-            "ngrok-skip-browser-warning": "true",
         },
         body: JSON.stringify(request),
     })
@@ -113,7 +109,6 @@ export async function sendForgotPasswordPin(email: string): Promise<any> {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "ngrok-skip-browser-warning": "true",
         },
         body: JSON.stringify({ email }),
     })
@@ -129,7 +124,6 @@ export async function verifyForgotPasswordPin(email: string, pin: string): Promi
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "ngrok-skip-browser-warning": "true",
         },
         body: JSON.stringify({ email, pin }),
     })
@@ -145,7 +139,6 @@ export async function resetPasswordWithPin(email: string, pin: string, newPasswo
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "ngrok-skip-browser-warning": "true",
         },
         body: JSON.stringify({ email, pin, newPassword }),
     })
@@ -161,7 +154,6 @@ export async function resendForgotPasswordPin(email: string): Promise<any> {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "ngrok-skip-browser-warning": "true",
         },
         body: JSON.stringify({ email }),
     })

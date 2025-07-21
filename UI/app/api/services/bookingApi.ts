@@ -2,7 +2,7 @@ export type CreateBookingRequestDto = {
     serviceId: number
     areaSizeId: number
     timeSlotId: number
-    bookingDate: string // dạng "yyyy-MM-dd"
+    bookingDate: string
     addressDistrict: string
     addressDetail: string
     contactName: string
@@ -16,7 +16,6 @@ export async function createBooking(data: CreateBookingRequestDto, token: string
         headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
-            "ngrok-skip-browser-warning": "true",
         },
         body: JSON.stringify(data),
     })
@@ -35,13 +34,11 @@ export async function createBooking(data: CreateBookingRequestDto, token: string
     return await res.json()
 }
 
-// Hàm gọi API lấy danh sách booking của user
 export async function getUserBookings(token: string, status: string = "all") {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/bookings?status=${status}`, {
         method: "GET",
         headers: {
             Authorization: `Bearer ${token}`,
-            "ngrok-skip-browser-warning": "true",
         },
     })
 
@@ -57,13 +54,11 @@ export async function getUserBookings(token: string, status: string = "all") {
     return await res.json()
 }
 
-// Hàm gọi API lấy thống kê dashboard
 export async function getDashboardStats(token: string) {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/bookings/dashboard-stats`, {
         method: "GET",
         headers: {
             Authorization: `Bearer ${token}`,
-            "ngrok-skip-browser-warning": "true",
         },
     })
 
@@ -78,14 +73,12 @@ export async function getDashboardStats(token: string) {
     return await res.json()
 }
 
-// Hàm gọi API lấy chi tiết booking theo ID
 export async function getBookingById(id: number, token: string) {
 
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/bookings/${id}`, {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${token}`,
-            "ngrok-skip-browser-warning": "true",
             'Content-Type': 'application/json',
         },
     });

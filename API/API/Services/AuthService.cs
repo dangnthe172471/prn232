@@ -56,7 +56,7 @@ namespace API.Services
 			{
 				Name = request.Name,
 				Email = request.Email,
-				Password = BCrypt.Net.BCrypt.HashPassword(request.Password), // Note: In a real app, hash this password!
+				Password = BCrypt.Net.BCrypt.HashPassword(request.Password), 
 				Phone = request.Phone,
 				Address = request.Address,
 				Role = request.Role,
@@ -68,12 +68,9 @@ namespace API.Services
 			_context.Users.Add(user);
 			await _context.SaveChangesAsync();
 
-			// Gửi email xác thực
 			await SendVerificationEmailAsync(user, token);
-			// Gửi email chào mừng
 			await SendWelcomeEmailAsync(user);
 
-			// Không trả token khi chưa xác thực
 			return new LoginResponseDto
 			{
 				Token = null,

@@ -84,7 +84,7 @@ export async function resendVerificationEmail(email: string): Promise<any> {
 }
 
 export const changePassword = async (
-    request: { email: string; oldPassword: string; newPassword: string },
+    request: { email: string; oldPassword: string; newPassword: string; reNewPassword: string },
     token: string
 ) => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Auth/change-password`, {
@@ -160,6 +160,22 @@ export async function resendForgotPasswordPin(email: string): Promise<any> {
     if (!res.ok) {
         const errorData = await res.json()
         throw new Error(errorData.message || "Không thể gửi lại mã PIN")
+    }
+    return res.json()
+}
+
+export async function updateUserProfile(data: { name: string; phone: string; address: string }, token: string) {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user/profile`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+    })
+    if (!res.ok) {
+        const errorData = await res.json()
+        throw new Error(errorData.message || "Cập nhật thông tin thất bại")
     }
     return res.json()
 }

@@ -106,15 +106,11 @@ namespace API.Controllers
             }
             try
             {
-                var booking = await _bookingService.GetUserBookingByIdAsync(id, -1);
+                var userId = GetCurrentUserId();
+                var booking = await _bookingService.GetUserBookingByIdAsync(id, userId);
                 if (booking == null)
                 {
-                    return NotFound(new { message = "Không tìm thấy đơn hàng." });
-                }
-                var userId = GetCurrentUserId();
-                if (booking.UserName == null || booking.UserName != User.Identity?.Name)
-                {
-                    return Unauthorized(new { message = "Bạn không có quyền truy cập đơn hàng này." });
+                    return NotFound(new { message = "Không tìm thấy đơn hàng hoặc bạn không có quyền." });
                 }
                 return Ok(booking);
             }
@@ -133,6 +129,30 @@ namespace API.Controllers
                 var userId = GetCurrentUserId();
                 var stats = await _bookingService.GetDashboardStatsAsync(userId);
                 return Ok(stats);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Lỗi hệ thống", detail = ex.Message });
+            }
+        }
+        
+        [HttpPut("{id}/cancel")]
+        [Authorize(Roles = "user")]
+        public async Task<IActionResult> CancelBooking(int id)
+        {
+            if (id <= 0)
+            {
+                return BadRequest(new { message = "Id không hợp lệ" });
+            }
+            try
+            {
+                var userId = GetCurrentUserId();
+                await _bookingService.CancelBookingByUserAsync(id, userId);
+                return Ok(new { message = "Đã hủy đơn thành công." });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message });
             }
             catch (Exception ex)
             {

@@ -96,3 +96,22 @@ export async function getBookingById(id: number, token: string) {
     return await response.json();
 }
 
+export async function cancelBooking(id: number, token: string) {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/bookings/${id}/cancel`, {
+        method: 'PUT',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
+    });
+    if (!response.ok) {
+        let message = "Hủy đơn thất bại";
+        try {
+            const errorData = await response.json();
+            message = errorData.message || message;
+        } catch (_) { }
+        throw new Error(message);
+    }
+    return await response.json();
+}
+

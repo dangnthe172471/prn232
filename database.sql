@@ -202,40 +202,40 @@ INSERT INTO TimeSlots (TimeRange) VALUES
 
 -- Admin
 INSERT INTO Users (Name, Email, Password, Phone, Address, Role, Status, EmailVerified) VALUES
-(N'Admin CareU', 'admin@gmail.com', '123456', '0901122334', N'Thôn 1, Thạch Hòa, Thạch Thất, Hà Nội', 'admin', 'active', 1);
+(N'Admin', 'admin@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0901122334', N'Thôn 1, Thạch Hòa, Thạch Thất, Hà Nội', 'admin', 'active', 1);
 
 -- 4 Cleaners
 INSERT INTO Users (Name, Email, Password, Phone, Address, Role, Status,Experience, EmailVerified)
 VALUES
-(N'Trần Trang', 'ntmtrang123@gmail.com', '123456', '0904567890', N'Thôn 1, Thạch Hòa, Thạch Thất, Hà Nội', 'cleaner', 'active',N'Dưới 1 năm', 1),
-(N'Lê Tường Vy', 'letuongvy1806@gmail.com', '123456', '0812340986', N'Thôn 2, Thạch Hòa, Thạch Thất, Hà Nội', 'cleaner', 'active','1-3 năm', 1),
-(N'Nguyễn Hoàng Anh', 'nguyenhoanganh2n6@gmail.com', '123456', '0398765431', N'Thôn 3, Thạch Hòa, Thạch Thất, Hà Nội', 'cleaner', 'active',N'1-3 năm', 1),
-(N'Nguyễn Thu Trang', 'ntmtrang126@gmail.com', '123456', '0912345671', N'Thôn 4, Thạch Hòa, Thạch Thất, Hà Nội', 'cleaner', 'active',N'Dưới 1 năm', 1);
+(N'Trần Trang', 'ntmtrang123@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0904567890', N'Thôn 1, Thạch Hòa, Thạch Thất, Hà Nội', 'cleaner', 'active',N'Dưới 1 năm', 1),
+(N'Lê Tường Vy', 'letuongvy1806@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0812340986', N'Thôn 2, Thạch Hòa, Thạch Thất, Hà Nội', 'cleaner', 'active','1-3 năm', 1),
+(N'Nguyễn Hoàng Anh', 'nguyenhoanganh2n6@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0398765431', N'Thôn 3, Thạch Hòa, Thạch Thất, Hà Nội', 'cleaner', 'active',N'1-3 năm', 1),
+(N'Nguyễn Thu Trang', 'ntmtrang126@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0912345671', N'Thôn 4, Thạch Hòa, Thạch Thất, Hà Nội', 'cleaner', 'active',N'Dưới 1 năm', 1);
 
 -- 21 Users (role: user)
 INSERT INTO Users (Name, Email, Password, Phone, Address, Role, Status, EmailVerified)
 VALUES
-(N'Nguyễn Đức Tâm', 'nguyenductammdsl@gmail.com', '123456', '0901234567', N'Thôn 1, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
-(N'Nam Khánh', 'namkhanhdz123@gmail.com', '123456', '0812345678', N'Thôn 2, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
-(N'Quý', 'quy77889@gmail.com', '123456', '0398765432', N'Thôn 3, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
-(N'Nguyễn Quang Vinh', 'nguyenquangvinhzz@gmail.com', '123456', '0912345678', N'Thôn 4, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
-(N'Huỳnh Thái Khang', 'huynhthaikhang@gmail.com', '123456', '0898765432', N'Phú Mỹ, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
-(N'Đạt', 'dat8948@gmail.com', '123456', '0387654321', N'Tân Xã, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
-(N'Thanh D', 'thanhd2006@gmail.com', '123456', '0909876543', N'Phú Hữu, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
-(N'Hinh Võ', 'hinhvomkmv1987az@gmail.com', '123456', '0810987654', N'Thôn 1, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
-(N'King PvP', 'kingpvpfa2006@gmail.com', '123456', '0390123456', N'Thôn 2, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
-(N'Võ Nhật Duy', 'vonhatduy07082k6@gmail.com', '123456', '0910987654', N'Thôn 3, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
-(N'Tiến Nhiên', 'tiennhien2k6@gmail.com', '123456', '0890123456', N'Thôn 4, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
-(N'Ngô Khang', 'ngkhang2002zz@gmail.com', '123456', '0389012345', N'Phú Mỹ, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
-(N'Văn Linh', 'vanlinh2k666@gmail.com', '123456', '0902345678', N'Tân Xã, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
-(N'Ngô Thảo Nguyên', 'ngthaonguyen77@gmail.com', '123456', '0812340987', N'Phú Hữu, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
-(N'Văn Ách', 'vnaxkonchiem111@gmail.com', '123456', '0398760123', N'Thôn 1, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
-(N'Thắng Nghiêm', 'thangnghiem1964@gmail.com', '123456', '0912340987', N'Thôn 2, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
-(N'Văn Zlinh', 'vanzlinh@gmail.com', '123456', '0898760123', N'Thôn 3, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
-(N'Holy Alone', 'holyalone123@gmail.com', '123456', '0387650987', N'Thôn 4, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
-(N'Tân Đạt', 'tandat193@gmail.com', '123456', '0903456789', N'Phú Mỹ, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
-(N'Nguyễn Hoàng Anh', 'nguyenhoanganh2n7@gmail.com', '123456', '0812345670', N'Tân Xã, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
-(N'Nguyễn Trang', 'ntmtrang129@gmail.com', '123456', '0390123478', N'Phú Hữu, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1);
+(N'Nguyễn Đức Tâm', 'nguyenductammdsl@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0901234567', N'Thôn 1, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
+(N'Nam Khánh', 'namkhanhdz123@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0812345678', N'Thôn 2, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
+(N'Quý', 'quy77889@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0398765432', N'Thôn 3, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
+(N'Nguyễn Quang Vinh', 'nguyenquangvinhzz@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0912345678', N'Thôn 4, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
+(N'Huỳnh Thái Khang', 'huynhthaikhang@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0898765432', N'Phú Mỹ, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
+(N'Đạt', 'dat8948@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0387654321', N'Tân Xã, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
+(N'Thanh D', 'thanhd2006@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0909876543', N'Phú Hữu, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
+(N'Hinh Võ', 'hinhvomkmv1987az@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0810987654', N'Thôn 1, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
+(N'King PvP', 'kingpvpfa2006@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0390123456', N'Thôn 2, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
+(N'Võ Nhật Duy', 'vonhatduy07082k6@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0910987654', N'Thôn 3, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
+(N'Tiến Nhiên', 'tiennhien2k6@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0890123456', N'Thôn 4, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
+(N'Ngô Khang', 'ngkhang2002zz@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0389012345', N'Phú Mỹ, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
+(N'Văn Linh', 'vanlinh2k666@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0902345678', N'Tân Xã, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
+(N'Ngô Thảo Nguyên', 'ngthaonguyen77@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0812340987', N'Phú Hữu, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
+(N'Văn Ách', 'vnaxkonchiem111@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0398760123', N'Thôn 1, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
+(N'Thắng Nghiêm', 'thangnghiem1964@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0912340987', N'Thôn 2, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
+(N'Văn Zlinh', 'vanzlinh@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0898760123', N'Thôn 3, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
+(N'Holy Alone', 'holyalone123@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0387650987', N'Thôn 4, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
+(N'Tân Đạt', 'tandat193@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0903456789', N'Phú Mỹ, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
+(N'Nguyễn Hoàng Anh', 'nguyenhoanganh2n7@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0812345670', N'Tân Xã, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
+(N'Nguyễn Trang', 'ntmtrang129@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0390123478', N'Phú Hữu, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1);
 
 -- NewsCategories
 INSERT INTO NewsCategories (Name, Slug, ColorClass) VALUES
@@ -297,27 +297,27 @@ INSERT INTO NewsArticleTags (ArticleId, TagId) VALUES
 -- Bookings
 INSERT INTO Bookings (UserId, ServiceId, AreaSizeId, TimeSlotId, CleanerId, BookingDate, Address, ContactName, ContactPhone, Notes, TotalPrice, Status)
 VALUES
-(1, 1, 1, 1, 2, '2025-05-29', N'Thôn 1, Thạch Hòa, Thạch Thất, Hà Nội', N'Nguyễn Đức Tâm', '0901234567', NULL, 119000, 'completed'),
-(2, 1, 1, 1, 3, '2025-05-30', N'Thôn 2, Thạch Hòa, Thạch Thất, Hà Nội', N'Nam Khánh', '0812345678', NULL, 119000, 'completed'),
-(3, 1, 2, 1, 4, '2025-05-31', N'Thôn 3, Thạch Hòa, Thạch Thất, Hà Nội', N'Quý', '0398765432', NULL, 149000, 'completed'),
-(4, 1, 1, 1, 5, '2025-06-01', N'Thôn 4, Thạch Hòa, Thạch Thất, Hà Nội', N'Nguyễn Quang Vinh', '0912345678', NULL, 119000, 'completed'),
-(5, 1, 1, 1, 2, '2025-06-02', N'Phú Mỹ, Thạch Hòa, Thạch Thất, Hà Nội', N'Huỳnh Thái Khang', '0898765432', NULL, 119000, 'completed'),
-(6, 1, 1, 1, 3, '2025-06-03', N'Tân Xã, Thạch Hòa, Thạch Thất, Hà Nội', N'Đạt', '0387654321', NULL, 119000, 'completed'),
-(7, 1, 2, 1, 4, '2025-06-07', N'Phú Hữu, Thạch Hòa, Thạch Thất, Hà Nội', N'Thanh D', '0909876543', NULL, 149000, 'completed'),
-(8, 1, 2, 1, 5, '2025-06-07', N'Thôn 1, Thạch Hòa, Thạch Thất, Hà Nội', N'Hinh Võ', '0810987654', NULL, 149000, 'completed'),
-(9, 1, 1, 1, 2, '2025-06-07', N'Thôn 2, Thạch Hòa, Thạch Thất, Hà Nội', N'King PvP', '0390123456', NULL, 119000, 'completed'),
-(10, 1, 2, 1, 3, '2025-06-08', N'Thôn 3, Thạch Hòa, Thạch Thất, Hà Nội', N'Võ Nhật Duy', '0910987654', NULL, 149000, 'completed'),
-(11, 1, 2, 1, 4, '2025-06-08', N'Thôn 4, Thạch Hòa, Thạch Thất, Hà Nội', N'Tiến Nhiên', '0890123456', NULL, 149000, 'completed'),
-(12, 1, 1, 1, 5, '2025-06-09', N'Phú Mỹ, Thạch Hòa, Thạch Thất, Hà Nội', N'Ngô Khang', '0389012345', NULL, 119000, 'completed'),
-(13, 1, 2, 1, 2, '2025-06-10', N'Tân Xã, Thạch Hòa, Thạch Thất, Hà Nội', N'Văn Linh', '0902345678', NULL, 149000, 'completed'),
-(14, 1, 1, 1, 3, '2025-06-11', N'Phú Hữu, Thạch Hòa, Thạch Thất, Hà Nội', N'Ngô Thảo Nguyên', '0812340987', NULL, 119000, 'completed'),
-(15, 1, 2, 1, 4, '2025-06-14', N'Thôn 1, Thạch Hòa, Thạch Thất, Hà Nội', N'Văn Ách', '0398760123', NULL, 149000, 'completed'),
-(16, 1, 2, 1, 5, '2025-06-14', N'Thôn 2, Thạch Hòa, Thạch Thất, Hà Nội', N'Thắng Nghiêm', '0912340987', NULL, 149000, 'completed'),
-(17, 1, 2, 1, 2, '2025-06-14', N'Thôn 3, Thạch Hòa, Thạch Thất, Hà Nội', N'Văn Zlinh', '0898760123', NULL, 149000, 'completed'),
-(18, 1, 1, 1, 3, '2025-06-15', N'Thôn 4, Thạch Hòa, Thạch Thất, Hà Nội', N'Holy Alone', '0387650987', NULL, 119000, 'completed'),
-(19, 1, 4, 1, 4, '2025-06-15', N'Phú Mỹ, Thạch Hòa, Thạch Thất, Hà Nội', N'Tân Đạt', '0903456789', NULL, 278000, 'completed'),
-(20, 1, 2, 1, 5, '2025-06-15', N'Tân Xã, Thạch Hòa, Thạch Thất, Hà Nội', N'Nguyễn Hoàng Anh', '0812345670', NULL, 149000, 'completed'),
-(21, 1, 2, 1, 2, '2025-06-18', N'Phú Hữu, Thạch Hòa, Thạch Thất, Hà Nội', N'Nguyễn Trang', '0390123478', NULL, 149000, 'completed');
+(6, 1, 1, 1, 2, '2025-05-29', N'Thôn 1, Thạch Hòa, Thạch Thất, Hà Nội', N'Nguyễn Đức Tâm', '0901234567', NULL, 120000, 'completed'),
+(7, 1, 1, 1, 3, '2025-05-30', N'Thôn 2, Thạch Hòa, Thạch Thất, Hà Nội', N'Nam Khánh', '0812345678', NULL, 120000, 'completed'),
+(8, 1, 2, 1, 4, '2025-05-31', N'Thôn 3, Thạch Hòa, Thạch Thất, Hà Nội', N'Quý', '0398765432', NULL, 160000, 'completed'),
+(9, 1, 1, 1, 5, '2025-06-01', N'Thôn 4, Thạch Hòa, Thạch Thất, Hà Nội', N'Nguyễn Quang Vinh', '0912345678', NULL, 120000, 'completed'),
+(10, 1, 1, 1, 2, '2025-06-02', N'Phú Mỹ, Thạch Hòa, Thạch Thất, Hà Nội', N'Huỳnh Thái Khang', '0898765432', NULL, 120000, 'completed'),
+(11, 1, 1, 1, 3, '2025-06-03', N'Tân Xã, Thạch Hòa, Thạch Thất, Hà Nội', N'Đạt', '0387654321', NULL, 120000, 'completed'),
+(12, 1, 2, 1, 4, '2025-06-07', N'Phú Hữu, Thạch Hòa, Thạch Thất, Hà Nội', N'Thanh D', '0909876543', NULL, 160000, 'completed'),
+(13, 1, 2, 1, 5, '2025-06-07', N'Thôn 1, Thạch Hòa, Thạch Thất, Hà Nội', N'Hinh Võ', '0810987654', NULL, 160000, 'completed'),
+(14, 1, 1, 1, 2, '2025-06-07', N'Thôn 2, Thạch Hòa, Thạch Thất, Hà Nội', N'King PvP', '0390123456', NULL, 120000, 'completed'),
+(15, 1, 2, 1, 3, '2025-06-08', N'Thôn 3, Thạch Hòa, Thạch Thất, Hà Nội', N'Võ Nhật Duy', '0910987654', NULL, 160000, 'completed'),
+(16, 1, 2, 1, 4, '2025-06-08', N'Thôn 4, Thạch Hòa, Thạch Thất, Hà Nội', N'Tiến Nhiên', '0890123456', NULL, 160000, 'completed'),
+(17, 1, 1, 1, 5, '2025-06-09', N'Phú Mỹ, Thạch Hòa, Thạch Thất, Hà Nội', N'Ngô Khang', '0389012345', NULL, 120000, 'completed'),
+(18, 1, 2, 1, 2, '2025-06-10', N'Tân Xã, Thạch Hòa, Thạch Thất, Hà Nội', N'Văn Linh', '0902345678', NULL, 160000, 'completed'),
+(19, 1, 1, 1, 3, '2025-06-11', N'Phú Hữu, Thạch Hòa, Thạch Thất, Hà Nội', N'Ngô Thảo Nguyên', '0812340987', NULL, 120000, 'completed'),
+(20, 1, 2, 1, 4, '2025-06-14', N'Thôn 1, Thạch Hòa, Thạch Thất, Hà Nội', N'Văn Ách', '0398760123', NULL, 160000, 'completed'),
+(21, 1, 2, 1, 5, '2025-06-14', N'Thôn 2, Thạch Hòa, Thạch Thất, Hà Nội', N'Thắng Nghiêm', '0912340987', NULL, 160000, 'completed'),
+(22, 1, 2, 1, 2, '2025-06-14', N'Thôn 3, Thạch Hòa, Thạch Thất, Hà Nội', N'Văn Zlinh', '0898760123', NULL, 160000, 'completed'),
+(23, 1, 1, 1, 3, '2025-06-15', N'Thôn 4, Thạch Hòa, Thạch Thất, Hà Nội', N'Holy Alone', '0387650987', NULL, 120000, 'completed'),
+(24, 1, 4, 1, 4, '2025-06-15', N'Phú Mỹ, Thạch Hòa, Thạch Thất, Hà Nội', N'Tân Đạt', '0903456789', NULL, 400000, 'completed'),
+(25, 1, 2, 1, 5, '2025-06-15', N'Tân Xã, Thạch Hòa, Thạch Thất, Hà Nội', N'Nguyễn Hoàng Anh', '0812345670', NULL, 160000, 'completed'),
+(26, 1, 2, 1, 2, '2025-06-18', N'Phú Hữu, Thạch Hòa, Thạch Thất, Hà Nội', N'Nguyễn Trang', '0390123478', NULL, 160000, 'completed');
 
 -- Indexes để tối ưu performance
 CREATE INDEX IX_Bookings_UserId ON Bookings(UserId);

@@ -87,6 +87,8 @@ namespace API.Services
 		{
 			if (string.IsNullOrWhiteSpace(request.Email) || string.IsNullOrWhiteSpace(request.OldPassword) || string.IsNullOrWhiteSpace(request.NewPassword))
 				throw new ArgumentException("Thông tin đổi mật khẩu không hợp lệ");
+			if (request.NewPassword != request.ReNewPassword)
+				throw new ArgumentException("Mật khẩu mới và xác nhận mật khẩu không khớp");
 			var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
 			if (user == null || !BCrypt.Net.BCrypt.Verify(request.OldPassword, user.Password))
 				throw new UnauthorizedAccessException("Email hoặc mật khẩu cũ không đúng");

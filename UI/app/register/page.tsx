@@ -54,13 +54,7 @@ export default function RegisterPage() {
       const { agreeTerms, ...dataToSend } = formData
       await register(dataToSend)
 
-      await MySwal.fire({
-        icon: "success",
-        title: "Đăng ký thành công!",
-        html: "Vui lòng kiểm tra email để xác thực tài khoản. <br/>Link xác thực chỉ có hiệu lực trong 15 phút.",
-        timer: 4000,
-        showConfirmButton: true,
-      })
+      router.push(`/verify-email?email=${encodeURIComponent(formData.email)}`)
     } catch (err: any) {
       await MySwal.fire({
         icon: "error",

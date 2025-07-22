@@ -23,14 +23,11 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { toast } from "sonner"
-import Header from "@/components/header"
-import {
-  getUserBookings,
-  getDashboardStats,
-} from "@/app/api/services/bookingApi"
-import { changePassword } from "@/app/api/services/authApi"
+import { updateUserProfile, changePassword } from "@/app/api/services/authApi"
+import { getUserBookings, getDashboardStats } from "@/app/api/services/bookingApi"
 import Swal from "sweetalert2"
 import { formatPhoneNumber } from "@/lib/utils"
+import Header from "@/components/header"
 
 export default function UserDashboard() {
   const router = useRouter()
@@ -39,7 +36,17 @@ export default function UserDashboard() {
   const [stats, setStats] = useState<any>({})
   const [oldPassword, setOldPassword] = useState("")
   const [newPassword, setNewPassword] = useState("")
+  const [reNewPassword, setReNewPassword] = useState("")
   const [changing, setChanging] = useState(false)
+
+  // State cho form update profile
+  const [editProfile, setEditProfile] = useState({
+    name: user?.name || "",
+    phone: user?.phone || "",
+    address: user?.address || ""
+  });
+  const [updatingProfile, setUpdatingProfile] = useState(false);
+  const [editingProfile, setEditingProfile] = useState(false);
 
   useEffect(() => {
     const currentUser = localStorage.getItem("currentUser")
@@ -70,11 +77,59 @@ export default function UserDashboard() {
     fetchData()
   }, [router])
 
+  useEffect(() => {
+    if (user) {
+      setEditProfile({
+        name: user.name || "",
+        phone: user.phone || "",
+        address: user.address || ""
+      });
+    }
+  }, [user]);
+
+  const handleProfileInputChange = (field: string, value: string) => {
+    setEditProfile((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleUpdateProfile = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+    try {
+      setUpdatingProfile(true);
+      const updated = await updateUserProfile(editProfile, token);
+      // Cập nhật localStorage và state user
+      const newUser = { ...user, ...editProfile };
+      setUser(newUser);
+      localStorage.setItem("currentUser", JSON.stringify(newUser));
+      await Swal.fire({
+        icon: "success",
+        title: "Cập nhật thành công!",
+        showConfirmButton: false,
+        timer: 1500
+      });
+    } catch (err: any) {
+      await Swal.fire({
+        icon: "error",
+        title: "Cập nhật thất bại",
+        text: err.message || "Có lỗi xảy ra, vui lòng thử lại."
+      });
+    } finally {
+      setUpdatingProfile(false);
+    }
+  };
+
 
   const handleChangePassword = async () => {
     const token = localStorage.getItem("token")
     if (!token) return
-
+    if (newPassword !== reNewPassword) {
+      await Swal.fire({
+        icon: "error",
+        title: "Mật khẩu xác nhận không khớp",
+        text: "Vui lòng nhập lại đúng mật khẩu mới."
+      });
+      return;
+    }
     try {
       setChanging(true)
       await changePassword(
@@ -82,6 +137,7 @@ export default function UserDashboard() {
           email: user.email,
           oldPassword,
           newPassword,
+          reNewPassword,
         },
         token
       )
@@ -166,7 +222,7 @@ export default function UserDashboard() {
               </Button>
             </div>
             <div className="grid gap-6">
-              {bookings.map((b) => (
+              {[...bookings].sort((a, b) => new Date(b.bookingDate).getTime() - new Date(a.bookingDate).getTime()).map((b) => (
                 <Card key={b.id}>
                   <CardHeader className="flex justify-between items-start">
                     <div>
@@ -205,10 +261,74 @@ export default function UserDashboard() {
                 <CardTitle>Thông tin cá nhân</CardTitle>
               </CardHeader>
               <CardContent className="grid md:grid-cols-2 gap-4 text-lg">
-                <InfoItem label="Họ và tên" value={user.name} />
-                <InfoItem label="Email" value={user.email} />
-                <InfoItem label="Số điện thoại" value={formatPhoneNumber(user.phone)} />
-                <InfoItem label="Địa chỉ" value={user.address} />
+                {!editingProfile ? (
+                  <>
+                    <div className="space-y-2">
+                      <label className="block text-sm font-medium">Họ và tên</label>
+                      <div className="w-full border rounded px-3 py-2 bg-gray-50">{user.name}</div>
+                    </div>
+                    <div className="space-y-2">
+                      <label className="block text-sm font-medium">Email</label>
+                      <div className="w-full border rounded px-3 py-2 bg-gray-100">{user.email}</div>
+                    </div>
+                    <div className="space-y-2">
+                      <label className="block text-sm font-medium">Số điện thoại</label>
+                      <div className="w-full border rounded px-3 py-2 bg-gray-50">{user.phone}</div>
+                    </div>
+                    <div className="space-y-2 md:col-span-2">
+                      <label className="block text-sm font-medium">Địa chỉ</label>
+                      <div className="w-full border rounded px-3 py-2 bg-gray-50">{user.address}</div>
+                    </div>
+                    <div className="md:col-span-2 flex justify-end mt-4">
+                      <Button onClick={() => setEditingProfile(true)}>
+                        Chỉnh sửa
+                      </Button>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="space-y-2">
+                      <label className="block text-sm font-medium">Họ và tên</label>
+                      <input
+                        className="w-full border rounded px-3 py-2"
+                        value={editProfile.name}
+                        onChange={e => handleProfileInputChange("name", e.target.value)}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="block text-sm font-medium">Email</label>
+                      <input
+                        className="w-full border rounded px-3 py-2 bg-gray-100 cursor-not-allowed"
+                        value={user.email}
+                        disabled
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="block text-sm font-medium">Số điện thoại</label>
+                      <input
+                        className="w-full border rounded px-3 py-2"
+                        value={editProfile.phone}
+                        onChange={e => handleProfileInputChange("phone", e.target.value)}
+                      />
+                    </div>
+                    <div className="space-y-2 md:col-span-2">
+                      <label className="block text-sm font-medium">Địa chỉ</label>
+                      <input
+                        className="w-full border rounded px-3 py-2"
+                        value={editProfile.address}
+                        onChange={e => handleProfileInputChange("address", e.target.value)}
+                      />
+                    </div>
+                    <div className="md:col-span-2 flex justify-end mt-4 gap-2">
+                      <Button variant="outline" onClick={() => { setEditingProfile(false); setEditProfile({ name: user.name, phone: user.phone, address: user.address }); }}>
+                        Hủy
+                      </Button>
+                      <Button onClick={async () => { await handleUpdateProfile(); setEditingProfile(false); }} disabled={updatingProfile}>
+                        {updatingProfile ? "Đang cập nhật..." : "Lưu thay đổi"}
+                      </Button>
+                    </div>
+                  </>
+                )}
               </CardContent>
             </Card>
           </TabsContent>
@@ -221,6 +341,14 @@ export default function UserDashboard() {
               <CardContent className="space-y-4 max-w-sm">
                 <Input type="password" placeholder="Mật khẩu hiện tại" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} />
                 <Input type="password" placeholder="Mật khẩu mới" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+                <Input
+                  type="password"
+                  placeholder="Nhập lại mật khẩu mới"
+                  value={reNewPassword}
+                  onChange={e => setReNewPassword(e.target.value)}
+                  minLength={6}
+                  required
+                />
                 <Button onClick={handleChangePassword} disabled={changing}>
                   {changing ? "Đang xử lý..." : "Cập nhật mật khẩu"}
                 </Button>

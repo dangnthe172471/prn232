@@ -15,9 +15,15 @@ export default function VerifyEmailClient() {
     const [email, setEmail] = useState("");
     const [resendStatus, setResendStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
     const [resendMsg, setResendMsg] = useState("");
+    const [showResend, setShowResend] = useState(false);
 
     useEffect(() => {
         const token = searchParams.get("token");
+        const emailFromQuery = searchParams.get("email");
+        if (emailFromQuery) {
+            setEmail(emailFromQuery);
+            setShowResend(true);
+        }
         if (token) {
             setStatus("verifying");
             verifyEmail(token)
@@ -29,6 +35,19 @@ export default function VerifyEmailClient() {
                     setStatus("expired");
                     setMessage(err.message || "Xác thực email thất bại hoặc link đã hết hạn.");
                 });
+        }
+        // Nếu có currentUser trong localStorage, tự động điền email và hiển thị nút gửi lại xác thực
+        if (!emailFromQuery && typeof window !== "undefined") {
+            try {
+                const currentUser = localStorage.getItem("currentUser");
+                if (currentUser) {
+                    const user = JSON.parse(currentUser);
+                    if (user.email) {
+                        setEmail(user.email);
+                        setShowResend(true);
+                    }
+                }
+            } catch { }
         }
     }, [searchParams]);
 
@@ -74,19 +93,27 @@ export default function VerifyEmailClient() {
                             <AlertDescription className="text-red-800">{message}</AlertDescription>
                         </Alert>
                     )}
-                    {(status === "expired" || status === "error") && (
+                    {(status === "expired" || status === "error" || showResend) && (
                         <div className="mt-8">
                             <div className="mb-2 text-gray-700">Chưa nhận được email hoặc link đã hết hạn?</div>
-                            <Input
-                                type="email"
-                                placeholder="Nhập email để gửi lại xác thực"
-                                value={email}
-                                onChange={e => setEmail(e.target.value)}
-                                className="mb-2"
-                            />
-                            <Button onClick={handleResend} disabled={resendStatus === "sending"} className="w-full">
-                                {resendStatus === "sending" ? "Đang gửi..." : "Gửi lại email xác thực"}
-                            </Button>
+                            {email ? (
+                                <Button onClick={handleResend} disabled={resendStatus === "sending"} className="w-full">
+                                    {resendStatus === "sending" ? "Đang gửi..." : "Gửi lại email xác thực"}
+                                </Button>
+                            ) : (
+                                <>
+                                    <Input
+                                        type="email"
+                                        placeholder="Nhập email để gửi lại xác thực"
+                                        value={email}
+                                        onChange={e => setEmail(e.target.value)}
+                                        className="mb-2"
+                                    />
+                                    <Button onClick={handleResend} disabled={resendStatus === "sending"} className="w-full">
+                                        {resendStatus === "sending" ? "Đang gửi..." : "Gửi lại email xác thực"}
+                                    </Button>
+                                </>
+                            )}
                             {resendMsg && (
                                 <div className={`mt-2 text-sm ${resendStatus === "sent" ? "text-green-600" : "text-red-600"}`}>{resendMsg}</div>
                             )}

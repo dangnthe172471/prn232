@@ -340,6 +340,19 @@ namespace API.Services
             return stats;
         }
 
+        public async Task<bool> CancelBookingByUserAsync(int bookingId, int userId)
+        {
+            var booking = await _context.Bookings.FirstOrDefaultAsync(b => b.Id == bookingId && b.UserId == userId);
+            if (booking == null)
+                throw new ArgumentException("Không tìm thấy đơn hàng hoặc bạn không có quyền.");
+            if (booking.Status != "pending")
+                throw new ArgumentException("Chỉ có thể hủy đơn ở trạng thái pending.");
+            booking.Status = "cancelled";
+            booking.UpdatedAt = DateTime.UtcNow;
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
         private bool IsValidStatusTransition(string currentStatus, string newStatus)
         {
             return (currentStatus, newStatus) switch

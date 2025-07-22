@@ -15,5 +15,6 @@ namespace API.Services
         Task<BookingDetailDto> AssignCleanerToBookingAsync(int bookingId, int cleanerId);
         Task<BookingDetailDto> UpdateBookingStatusAsync(int bookingId, string status, int cleanerId);
         Task<CleanerDashboardStatsDto> GetCleanerDashboardStatsAsync(int cleanerId);
+        Task<bool> CancelBookingByUserAsync(int bookingId, int userId);
     }
 } 

@@ -26,7 +26,9 @@ import Link from "next/link"
 import { useParams, useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
+import Swal from "sweetalert2"
 import { getBookingById } from "@/app/api/services/bookingApi"
+import { cancelBooking } from "@/app/api/services/bookingApi"
 import { reviewApi, CreateReviewRequest } from "@/app/api/services/reviewApi"
 import Header from "@/components/header"
 import { formatPhoneNumber } from "@/lib/utils"
@@ -116,6 +118,7 @@ export default function BookingDetailPage() {
   const [editRating, setEditRating] = useState(5)
   const [editComment, setEditComment] = useState("")
   const [isEditSubmitting, setIsEditSubmitting] = useState(false)
+  const [isCancelling, setIsCancelling] = useState(false)
 
   useEffect(() => {
     const fetchBookingDetail = async () => {
@@ -239,6 +242,58 @@ export default function BookingDetailPage() {
     }
   }
 
+  // Thêm hàm hủy đơn
+  const handleCancelBooking = async () => {
+    if (!booking) return;
+    const result = await Swal.fire({
+      title: "Xác nhận hủy đơn",
+      text: "Bạn có chắc chắn muốn hủy đơn này? Hành động này không thể hoàn tác.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Hủy đơn",
+      cancelButtonText: "Không, quay lại",
+      reverseButtons: true,
+      customClass: {
+        confirmButton: 'swal2-confirm btn btn-danger',
+        cancelButton: 'swal2-cancel btn btn-secondary'
+      }
+    });
+    if (!result.isConfirmed) {
+      return;
+    }
+    setIsCancelling(true);
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        await Swal.fire({
+          icon: "error",
+          title: "Bạn chưa đăng nhập.",
+          confirmButtonText: "Đăng nhập"
+        });
+        router.push('/login');
+        return;
+      }
+      await cancelBooking(booking.id, token);
+      await Swal.fire({
+        icon: "success",
+        title: "Đã hủy đơn thành công!",
+        showConfirmButton: false,
+        timer: 1800
+      });
+      // Reload booking detail
+      const data = await getBookingById(booking.id, token);
+      setBooking(data);
+    } catch (err: any) {
+      await Swal.fire({
+        icon: "error",
+        title: "Hủy đơn thất bại",
+        text: err.message || "Có lỗi xảy ra khi hủy đơn."
+      });
+    } finally {
+      setIsCancelling(false);
+    }
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center">
@@ -290,6 +345,17 @@ export default function BookingDetailPage() {
                   <Badge className={getStatusColor(booking.status)}>{getStatusText(booking.status)}</Badge>
                 </div>
               </div>
+
+              {/* Nút hủy đơn nếu trạng thái pending */}
+              {booking.status === "pending" && (
+                <Button
+                  variant="destructive"
+                  onClick={handleCancelBooking}
+                  disabled={isCancelling}
+                >
+                  {isCancelling ? "Đang hủy..." : "Hủy đơn"}
+                </Button>
+              )}
 
               {booking.status === "completed" && (
                 <div className="flex gap-2">

@@ -210,22 +210,22 @@ VALUES
 (N'Trần Trang', 'ntmtrang123@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0904567890', N'Thôn 1, Thạch Hòa, Thạch Thất, Hà Nội', 'cleaner', 'active',N'Dưới 1 năm', 1),
 (N'Lê Tường Vy', 'letuongvy1806@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0812340986', N'Thôn 2, Thạch Hòa, Thạch Thất, Hà Nội', 'cleaner', 'active','1-3 năm', 1),
 (N'Nguyễn Hoàng Anh', 'nguyenhoanganh2n6@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0398765431', N'Thôn 3, Thạch Hòa, Thạch Thất, Hà Nội', 'cleaner', 'active',N'1-3 năm', 1),
-(N'Nguyễn Thu Trang', 'ntmtrang126@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '09$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK71', N'Thôn 4, Thạch Hòa, Thạch Thất, Hà Nội', 'cleaner', 'active',N'Dưới 1 năm', 1);
+(N'Nguyễn Thu Trang', 'ntmtrang126@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0912345671', N'Thôn 4, Thạch Hòa, Thạch Thất, Hà Nội', 'cleaner', 'active',N'Dưới 1 năm', 1);
 
 -- 21 Users (role: user)
 INSERT INTO Users (Name, Email, Password, Phone, Address, Role, Status, EmailVerified)
 VALUES
-(N'Nguyễn Đức Tâm', 'nguyenductammdsl@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '090$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK7', N'Thôn 1, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
-(N'Nam Khánh', 'namkhanhdz123@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '08$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK78', N'Thôn 2, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
+(N'Nguyễn Đức Tâm', 'nguyenductammdsl@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0901234567', N'Thôn 1, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
+(N'Nam Khánh', 'namkhanhdz123@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0812345678', N'Thôn 2, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
 (N'Quý', 'quy77889@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0398765432', N'Thôn 3, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
-(N'Nguyễn Quang Vinh', 'nguyenquangvinhzz@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '09$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK78', N'Thôn 4, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
+(N'Nguyễn Quang Vinh', 'nguyenquangvinhzz@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0912345678', N'Thôn 4, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
 (N'Huỳnh Thái Khang', 'huynhthaikhang@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0898765432', N'Phú Mỹ, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
 (N'Đạt', 'dat8948@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0387654321', N'Tân Xã, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
 (N'Thanh D', 'thanhd2006@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0909876543', N'Phú Hữu, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
 (N'Hinh Võ', 'hinhvomkmv1987az@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0810987654', N'Thôn 1, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
-(N'King PvP', 'kingpvpfa2006@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0390$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', N'Thôn 2, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
+(N'King PvP', 'kingpvpfa2006@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0390123456', N'Thôn 2, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
 (N'Võ Nhật Duy', 'vonhatduy07082k6@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0910987654', N'Thôn 3, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
-(N'Tiến Nhiên', 'tiennhien2k6@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0890$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', N'Thôn 4, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
+(N'Tiến Nhiên', 'tiennhien2k6@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0890123456', N'Thôn 4, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
 (N'Ngô Khang', 'ngkhang2002zz@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0389012345', N'Phú Mỹ, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
 (N'Văn Linh', 'vanlinh2k666@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0902345678', N'Tân Xã, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
 (N'Ngô Thảo Nguyên', 'ngthaonguyen77@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0812340987', N'Phú Hữu, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
@@ -234,7 +234,7 @@ VALUES
 (N'Văn Zlinh', 'vanzlinh@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0898760123', N'Thôn 3, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
 (N'Holy Alone', 'holyalone123@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0387650987', N'Thôn 4, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
 (N'Tân Đạt', 'tandat193@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0903456789', N'Phú Mỹ, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
-(N'Nguyễn Hoàng Anh', 'nguyenhoanganh2n7@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '08$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK70', N'Tân Xã, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
+(N'Nguyễn Hoàng Anh', 'nguyenhoanganh2n7@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0812345670', N'Tân Xã, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1),
 (N'Nguyễn Trang', 'ntmtrang129@gmail.com', '$2a$11$DkrieekTaVPOPWNorE3Ev.82Ll6zA72u/Xya/GwnHHs2r2DLdD0zK', '0390123478', N'Phú Hữu, Thạch Hòa, Thạch Thất, Hà Nội', 'user', 'active', 1);
 
 -- NewsCategories

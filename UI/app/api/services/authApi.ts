@@ -46,12 +46,10 @@ export async function register(request: RegisterRequestDto): Promise<any> {
         },
         body: JSON.stringify(request),
     })
-
     if (!res.ok) {
         const errorData = await res.json()
         throw new Error(errorData.message || "Đăng ký thất bại")
     }
-
     return res.json()
 }
 

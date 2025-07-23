@@ -22,6 +22,12 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const router = useRouter()
 
+  const demoAccounts = {
+    user: { email: "user@demo.com", password: "123456" },
+    cleaner: { email: "cleaner@demo.com", password: "123456" },
+    admin: { email: "admin@demo.com", password: "123456" },
+  }
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
@@ -37,7 +43,7 @@ export default function LoginPage() {
         phone: response.phone,
         address: response.address,
         role: response.role,
-        token: response.token
+        token: response.token 
       }))
 
       switch (response.role) {
@@ -55,6 +61,12 @@ export default function LoginPage() {
     } finally {
       setLoading(false)
     }
+  }
+
+  const handleDemoLogin = (role: "user" | "cleaner" | "admin") => {
+    const account = demoAccounts[role]
+    setEmail(account.email)
+    setPassword(account.password)
   }
 
   return (

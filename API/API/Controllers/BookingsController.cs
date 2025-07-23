@@ -142,6 +142,7 @@ namespace API.Controllers
         {
             if (id <= 0)
             {
+
                 return BadRequest(new { message = "Id không hợp lệ" });
             }
             try

@@ -36,7 +36,6 @@ export default function LoginPage() {
     try {
       const response = await login({ email, password })
 
-      // ✅ Ghi đúng định dạng vào localStorage
       localStorage.setItem("token", response.token)
       localStorage.setItem("currentUser", JSON.stringify({
         name: response.name,
@@ -44,10 +43,9 @@ export default function LoginPage() {
         phone: response.phone,
         address: response.address,
         role: response.role,
-        token: response.token // ✅ THÊM token vào đây
+        token: response.token 
       }))
 
-      // ✅ Điều hướng theo vai trò
       switch (response.role) {
         case "admin":
           router.push("/admin/dashboard")

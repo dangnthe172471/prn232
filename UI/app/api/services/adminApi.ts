@@ -65,7 +65,6 @@ export interface BillDto {
 }
 
 export const adminApi = {
-    // Lấy thống kê dashboard
     getDashboardStats: async (token: string): Promise<AdminDashboardStatsDto> => {
         const response = await fetch(`${API_BASE_URL}/api/admin/dashboard-stats`, {
             method: 'GET',
@@ -86,7 +85,6 @@ export const adminApi = {
         return response.json();
     },
 
-    // Lấy danh sách tất cả booking
     getAllBookings: async (
         token: string,
         page: number = 1,
@@ -123,7 +121,6 @@ export const adminApi = {
         };
     },
 
-    // Lấy chi tiết booking theo ID
     getBookingById: async (token: string, id: number): Promise<BookingDto> => {
         const response = await fetch(`${API_BASE_URL}/api/admin/bookings/${id}`, {
             method: 'GET',

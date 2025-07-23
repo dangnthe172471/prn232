@@ -1,6 +1,8 @@
 using API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
+using API.DTOs;
 
 namespace API.Controllers
 {
@@ -23,6 +25,61 @@ namespace API.Controllers
                 .Select(s => new { s.Id, s.Name, s.BasePrice, s.Icon })
                 .ToListAsync();
             return Ok(services);
+        }
+
+        // --- Service Management (CRUD) ---
+        [HttpGet("services/all")]
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> GetAllServices()
+        {
+            var services = await _context.Services.ToListAsync();
+            return Ok(services);
+        }
+
+        [HttpPost("services")]
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> CreateService([FromBody] CreateServiceDto dto)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            var service = new Service
+            {
+                Name = dto.Name,
+                Description = dto.Description,
+                BasePrice = dto.BasePrice,
+                Duration = dto.Duration,
+                Icon = dto.Icon,
+                IsActive = dto.IsActive
+            };
+            _context.Services.Add(service);
+            await _context.SaveChangesAsync();
+            return Created("", service);
+        }
+
+        [HttpPut("services/{id}")]
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> UpdateService(int id, [FromBody] UpdateServiceDto dto)
+        {
+            var service = await _context.Services.FindAsync(id);
+            if (service == null) return NotFound();
+            service.Name = dto.Name;
+            service.Description = dto.Description;
+            service.BasePrice = dto.BasePrice;
+            service.Duration = dto.Duration;
+            service.Icon = dto.Icon;
+            service.IsActive = dto.IsActive;
+            await _context.SaveChangesAsync();
+            return Ok(service);
+        }
+
+        [HttpDelete("services/{id}")]
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> DeleteService(int id)
+        {
+            var service = await _context.Services.FindAsync(id);
+            if (service == null) return NotFound();
+            _context.Services.Remove(service);
+            await _context.SaveChangesAsync();
+            return NoContent();
         }
 
         [HttpGet("areasizes")]

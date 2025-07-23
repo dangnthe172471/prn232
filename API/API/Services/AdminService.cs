@@ -258,5 +258,83 @@ namespace API.Services
                 .OrderByDescending(b => b.Date)
                 .ToListAsync();
         }
+
+        // Service Management
+        public async Task<IEnumerable<ServiceDto>> GetAllServicesAsync()
+        {
+            return await _context.Services
+                .Select(s => new ServiceDto
+                {
+                    Id = s.Id,
+                    Name = s.Name,
+                    Description = s.Description,
+                    BasePrice = s.BasePrice,
+                    Duration = s.Duration,
+                    Icon = s.Icon,
+                    IsActive = s.IsActive ?? true,
+                    CreatedAt = s.CreatedAt
+                })
+                .ToListAsync();
+        }
+
+        public async Task<ServiceDto> CreateServiceAsync(CreateServiceDto dto)
+        {
+            var service = new Models.Service
+            {
+                Name = dto.Name,
+                Description = dto.Description,
+                BasePrice = dto.BasePrice,
+                Duration = dto.Duration,
+                Icon = dto.Icon,
+                IsActive = dto.IsActive,
+                CreatedAt = DateTime.UtcNow
+            };
+            _context.Services.Add(service);
+            await _context.SaveChangesAsync();
+            return new ServiceDto
+            {
+                Id = service.Id,
+                Name = service.Name,
+                Description = service.Description,
+                BasePrice = service.BasePrice,
+                Duration = service.Duration,
+                Icon = service.Icon,
+                IsActive = service.IsActive ?? true,
+                CreatedAt = service.CreatedAt
+            };
+        }
+
+        public async Task<ServiceDto> UpdateServiceAsync(int id, UpdateServiceDto dto)
+        {
+            var service = await _context.Services.FindAsync(id);
+            if (service == null) throw new ArgumentException("Không tìm thấy dịch vụ");
+            service.Name = dto.Name;
+            service.Description = dto.Description;
+            service.BasePrice = dto.BasePrice;
+            service.Duration = dto.Duration;
+            service.Icon = dto.Icon;
+            service.IsActive = dto.IsActive;
+            await _context.SaveChangesAsync();
+            return new ServiceDto
+            {
+                Id = service.Id,
+                Name = service.Name,
+                Description = service.Description,
+                BasePrice = service.BasePrice,
+                Duration = service.Duration,
+                Icon = service.Icon,
+                IsActive = service.IsActive ?? true,
+                CreatedAt = service.CreatedAt
+            };
+        }
+
+        public async Task<bool> DeleteServiceAsync(int id)
+        {
+            var service = await _context.Services.FindAsync(id);
+            if (service == null) return false;
+            _context.Services.Remove(service);
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 } 

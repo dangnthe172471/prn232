@@ -23,5 +23,11 @@ namespace API.Services
         
         // Bill Management
         Task<IEnumerable<BillDto>> GetAllBillsAsync();
+
+        // Service Management
+        Task<IEnumerable<ServiceDto>> GetAllServicesAsync();
+        Task<ServiceDto> CreateServiceAsync(CreateServiceDto dto);
+        Task<ServiceDto> UpdateServiceAsync(int id, UpdateServiceDto dto);
+        Task<bool> DeleteServiceAsync(int id);
     }
 } 

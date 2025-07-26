@@ -309,5 +309,20 @@ export const adminApi = {
         return response.json();
     },
 
+    deleteService: async (token: string, id: number): Promise<void> => {
+        const response = await fetch(`${API_BASE_URL}/api/referencedata/services/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        });
 
+        if (!response.ok) {
+            if (response.status === 404) {
+                throw new Error('Không tìm thấy dịch vụ.');
+            }
+            throw new Error('Có lỗi xảy ra khi xóa dịch vụ.');
+        }
+    },
 }; 

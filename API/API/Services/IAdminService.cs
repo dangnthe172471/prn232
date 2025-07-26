@@ -29,5 +29,9 @@ namespace API.Services
         Task<ServiceDto> CreateServiceAsync(CreateServiceDto dto);
         Task<ServiceDto> UpdateServiceAsync(int id, UpdateServiceDto dto);
         Task<bool> DeleteServiceAsync(int id);
+
+        // Analytics
+        Task<IEnumerable<TopCustomerDto>> GetTopCustomersAsync(int limit = 10);
+        Task<IEnumerable<TopCleanerDto>> GetTopCleanersAsync(int limit = 10);
     }
 } 

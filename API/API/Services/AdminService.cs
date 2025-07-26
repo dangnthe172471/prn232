@@ -348,10 +348,10 @@ namespace API.Services
                     Name = u.Name,
                     Email = u.Email,
                     Phone = u.Phone,
-                    TotalBookings = u.Bookings.Count(),
-                    TotalSpent = u.Bookings.Where(b => b.Status == "completed").Sum(b => b.TotalPrice),
-                    LastBookingDate = u.Bookings.OrderByDescending(b => b.CreatedAt).FirstOrDefault().CreatedAt ?? DateTime.MinValue,
-                    CreatedAt = u.CreatedAt
+                    TotalBookings = u.BookingUsers.Count(),
+                    TotalSpent = u.BookingUsers.Where(b => b.Status == "completed").Sum(b => b.TotalPrice),
+                    LastBookingDate = u.BookingUsers.OrderByDescending(b => b.CreatedAt).FirstOrDefault() != null ? u.BookingUsers.OrderByDescending(b => b.CreatedAt).FirstOrDefault().CreatedAt ?? DateTime.MinValue : DateTime.MinValue,
+                    CreatedAt = u.CreatedAt ?? DateTime.MinValue
                 })
                 .Where(c => c.TotalBookings > 0)
                 .OrderByDescending(c => c.TotalBookings)
@@ -376,9 +376,12 @@ namespace API.Services
                     AverageRating = u.BookingCleaners
                         .Where(b => b.Status == "completed" && b.Reviews.Any())
                         .SelectMany(b => b.Reviews)
-                        .Average(r => r.Rating) ?? 0,
-                    LastBookingDate = u.BookingCleaners.OrderByDescending(b => b.CreatedAt).FirstOrDefault().CreatedAt ?? DateTime.MinValue,
-                    CreatedAt = u.CreatedAt
+                        .Any() ? u.BookingCleaners
+                            .Where(b => b.Status == "completed" && b.Reviews.Any())
+                            .SelectMany(b => b.Reviews)
+                            .Average(r => r.Rating) : 0.0,
+                    LastBookingDate = u.BookingCleaners.OrderByDescending(b => b.CreatedAt).FirstOrDefault() != null ? u.BookingCleaners.OrderByDescending(b => b.CreatedAt).FirstOrDefault().CreatedAt ?? DateTime.MinValue : DateTime.MinValue,
+                    CreatedAt = u.CreatedAt ?? DateTime.MinValue
                 })
                 .Where(c => c.TotalBookings > 0)
                 .OrderByDescending(c => c.CompletedBookings)

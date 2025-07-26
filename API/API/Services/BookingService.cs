@@ -95,7 +95,7 @@ namespace API.Services
                     UserName = b.User.Name,
                     ServiceName = b.Service.Name,
                     AreaSizeName = b.AreaSize.Name,
-                    TimeSlotRange = b.TimeSlot.TimeRange,
+                    TimeSlotRange = b.TimeSlot != null ? b.TimeSlot.TimeRange : "Chưa xác định",
                     BookingDate = b.BookingDate,
                     Address = b.Address,
                     ContactName = b.ContactName,

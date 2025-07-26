@@ -15,6 +15,7 @@ import {
     DollarSign,
     TrendingUp,
     Eye,
+    EyeOff,
     Edit,
     Loader2,
     AlertCircle,
@@ -298,8 +299,11 @@ export default function AdminDashboardPage() {
         }
     }
 
-    const handleDeleteService = async (serviceId: number) => {
-        if (!confirm('Bạn có chắc chắn muốn xóa dịch vụ này?')) return
+    const handleToggleServiceStatus = async (service: ServiceDto) => {
+        const newStatus = !service.isActive
+        const actionText = newStatus ? 'kích hoạt' : 'vô hiệu hóa'
+
+        if (!confirm(`Bạn có chắc chắn muốn ${actionText} dịch vụ "${service.name}"?`)) return
 
         const token = localStorage.getItem('token')
         if (!token) {
@@ -309,11 +313,18 @@ export default function AdminDashboardPage() {
         }
 
         try {
-            await adminApi.deleteService(token, serviceId)
-            toast.success("Xóa dịch vụ thành công!")
+            await adminApi.updateService(token, service.id, {
+                name: service.name,
+                description: service.description || '',
+                basePrice: service.basePrice,
+                duration: service.duration || '',
+                icon: service.icon || '',
+                isActive: newStatus
+            })
+            toast.success(`${actionText.charAt(0).toUpperCase() + actionText.slice(1)} dịch vụ thành công!`)
             fetchServices(token)
         } catch (err) {
-            const errorMessage = err instanceof Error ? err.message : 'Có lỗi xảy ra khi xóa'
+            const errorMessage = err instanceof Error ? err.message : 'Có lỗi xảy ra khi cập nhật trạng thái'
             toast.error(errorMessage)
         }
     }
@@ -717,7 +728,10 @@ export default function AdminDashboardPage() {
                         {/* Services Tab */}
                         <TabsContent value="services" className="space-y-4">
                             <div className="flex justify-between items-center mb-4">
-                                <h3 className="text-lg font-semibold">Quản lý dịch vụ</h3>
+                                <div>
+                                    <h3 className="text-lg font-semibold">Quản lý dịch vụ</h3>
+                                    <p className="text-sm text-gray-600">Chỉnh sửa thông tin hoặc thay đổi trạng thái hoạt động của dịch vụ</p>
+                                </div>
                                 <Button onClick={() => handleOpenServiceModal()}>
                                     <Plus className="h-4 w-4 mr-2" />
                                     Thêm dịch vụ
@@ -764,8 +778,17 @@ export default function AdminDashboardPage() {
                                                             <Button variant="ghost" size="sm" onClick={() => handleOpenServiceModal(service)}>
                                                                 <Edit className="h-4 w-4" />
                                                             </Button>
-                                                            <Button variant="ghost" size="sm" onClick={() => handleDeleteService(service.id)}>
-                                                                <Trash2 className="h-4 w-4 text-red-500" />
+                                                            <Button
+                                                                variant="ghost"
+                                                                size="sm"
+                                                                onClick={() => handleToggleServiceStatus(service)}
+                                                                title={service.isActive ? 'Vô hiệu hóa dịch vụ' : 'Kích hoạt dịch vụ'}
+                                                            >
+                                                                {service.isActive ? (
+                                                                    <EyeOff className="h-4 w-4 text-orange-500" />
+                                                                ) : (
+                                                                    <Eye className="h-4 w-4 text-green-500" />
+                                                                )}
                                                             </Button>
                                                         </div>
                                                     </TableCell>

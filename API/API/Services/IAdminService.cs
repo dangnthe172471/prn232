@@ -9,6 +9,10 @@ namespace API.Services
         // Dashboard Statistics
         Task<AdminDashboardStatsDto> GetDashboardStatsAsync();
         
+        // Analytics
+        Task<IEnumerable<TopCustomerDto>> GetTopCustomersAsync(int limit = 10);
+        Task<IEnumerable<TopCleanerDto>> GetTopCleanersAsync(int limit = 10);
+        
         // Booking Management
         Task<PagedResult<BookingResponseDto>> GetAllBookingsAsync(int page, int pageSize, string? searchTerm = null, string? status = null);
         Task<BookingResponseDto?> GetBookingByIdAsync(int bookingId);

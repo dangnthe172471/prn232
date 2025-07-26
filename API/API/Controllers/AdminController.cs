@@ -34,6 +34,35 @@ namespace API.Controllers
             }
         }
 
+        // Analytics
+        [HttpGet("analytics/top-customers")]
+        public async Task<IActionResult> GetTopCustomers([FromQuery] int limit = 10)
+        {
+            try
+            {
+                var topCustomers = await _adminService.GetTopCustomersAsync(limit);
+                return Ok(topCustomers);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Lỗi hệ thống", detail = ex.Message });
+            }
+        }
+
+        [HttpGet("analytics/top-cleaners")]
+        public async Task<IActionResult> GetTopCleaners([FromQuery] int limit = 10)
+        {
+            try
+            {
+                var topCleaners = await _adminService.GetTopCleanersAsync(limit);
+                return Ok(topCleaners);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Lỗi hệ thống", detail = ex.Message });
+            }
+        }
+
         // Booking Management
         [HttpGet("bookings")]
         public async Task<IActionResult> GetAllBookings([FromQuery] int page = 1, [FromQuery] int pageSize = 10, [FromQuery] string? search = null, [FromQuery] string? status = null)

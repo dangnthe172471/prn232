@@ -350,7 +350,9 @@ namespace API.Services
                     Phone = u.Phone,
                     TotalBookings = u.BookingUsers.Count(),
                     TotalSpent = u.BookingUsers.Where(b => b.Status == "completed").Sum(b => b.TotalPrice),
-                    LastBookingDate = u.BookingUsers.OrderByDescending(b => b.CreatedAt).FirstOrDefault() != null ? u.BookingUsers.OrderByDescending(b => b.CreatedAt).FirstOrDefault().CreatedAt ?? DateTime.MinValue : DateTime.MinValue,
+                    LastBookingDate = u.BookingUsers.Any() ? 
+                        u.BookingUsers.OrderByDescending(b => b.CreatedAt).First().CreatedAt ?? DateTime.MinValue : 
+                        DateTime.MinValue,
                     CreatedAt = u.CreatedAt ?? DateTime.MinValue
                 })
                 .Where(c => c.TotalBookings > 0)
@@ -380,7 +382,9 @@ namespace API.Services
                             .Where(b => b.Status == "completed" && b.Reviews.Any())
                             .SelectMany(b => b.Reviews)
                             .Average(r => r.Rating) : 0.0,
-                    LastBookingDate = u.BookingCleaners.OrderByDescending(b => b.CreatedAt).FirstOrDefault() != null ? u.BookingCleaners.OrderByDescending(b => b.CreatedAt).FirstOrDefault().CreatedAt ?? DateTime.MinValue : DateTime.MinValue,
+                    LastBookingDate = u.BookingCleaners.Any() ? 
+                        u.BookingCleaners.OrderByDescending(b => b.CreatedAt).First().CreatedAt ?? DateTime.MinValue : 
+                        DateTime.MinValue,
                     CreatedAt = u.CreatedAt ?? DateTime.MinValue
                 })
                 .Where(c => c.TotalBookings > 0)

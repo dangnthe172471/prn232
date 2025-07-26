@@ -3,6 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { Switch } from "@/components/ui/switch"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -17,11 +19,13 @@ import {
     Loader2,
     AlertCircle,
     FileText,
+    Plus,
+    Trash2,
 } from "lucide-react"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
-import { adminApi, AdminDashboardStatsDto, BookingDto, CustomerDto, CleanerDto, BillDto } from "@/app/api/services/adminApi"
+import { adminApi, AdminDashboardStatsDto, BookingDto, CustomerDto, CleanerDto, BillDto, ServiceDto, CreateServiceDto, UpdateServiceDto } from "@/app/api/services/adminApi"
 import {
     Dialog,
     DialogContent,
@@ -47,6 +51,7 @@ export default function AdminDashboardPage() {
     const [customers, setCustomers] = useState<CustomerDto[]>([])
     const [cleaners, setCleaners] = useState<CleanerDto[]>([])
     const [bills, setBills] = useState<BillDto[]>([])
+    const [services, setServices] = useState<ServiceDto[]>([])
 
     // Pagination and filters
     const [currentPage, setCurrentPage] = useState(1)
@@ -64,6 +69,20 @@ export default function AdminDashboardPage() {
     const [selectedBooking, setSelectedBooking] = useState<BookingDto | null>(null)
     const [isBookingDetailModalOpen, setIsBookingDetailModalOpen] = useState(false)
     const [isLoadingBookingDetail, setIsLoadingBookingDetail] = useState(false)
+
+    // State for managing services
+    const [isServiceModalOpen, setIsServiceModalOpen] = useState(false)
+    const [isEditingService, setIsEditingService] = useState(false)
+    const [selectedService, setSelectedService] = useState<ServiceDto | null>(null)
+    const [serviceForm, setServiceForm] = useState<CreateServiceDto>({
+        name: '',
+        description: '',
+        basePrice: 0,
+        duration: '',
+        icon: '',
+        isActive: true
+    })
+    const [isSubmittingService, setIsSubmittingService] = useState(false)
 
     // State cho tổng số đơn hàng và tổng số trang
     const [totalBookings, setTotalBookings] = useState(0)
@@ -90,7 +109,8 @@ export default function AdminDashboardPage() {
                     fetchBookings(token),
                     fetchCustomers(token),
                     fetchCleaners(token),
-                    fetchBills(token)
+                    fetchBills(token),
+                    fetchServices(token)
                 ])
 
             } catch (err) {
@@ -155,6 +175,15 @@ export default function AdminDashboardPage() {
         }
     }
 
+    const fetchServices = async (token: string) => {
+        try {
+            const servicesData = await adminApi.getAllServices(token)
+            setServices(servicesData)
+        } catch (err) {
+            console.error('Error fetching services:', err)
+        }
+    }
+
     const handleOpenStatusModal = (cleaner: CleanerDto) => {
         setSelectedCleaner(cleaner)
         setNewCleanerStatus(cleaner.status)
@@ -208,6 +237,84 @@ export default function AdminDashboardPage() {
             setIsBookingDetailModalOpen(false)
         } finally {
             setIsLoadingBookingDetail(false)
+        }
+    }
+
+    // Service management functions
+    const handleOpenServiceModal = (service?: ServiceDto) => {
+        if (service) {
+            setSelectedService(service)
+            setIsEditingService(true)
+            setServiceForm({
+                name: service.name,
+                description: service.description || '',
+                basePrice: service.basePrice,
+                duration: service.duration || '',
+                icon: service.icon || '',
+                isActive: service.isActive
+            })
+        } else {
+            setSelectedService(null)
+            setIsEditingService(false)
+            setServiceForm({
+                name: '',
+                description: '',
+                basePrice: 0,
+                duration: '',
+                icon: '',
+                isActive: true
+            })
+        }
+        setIsServiceModalOpen(true)
+    }
+
+    const handleSubmitService = async () => {
+        const token = localStorage.getItem('token')
+        if (!token) {
+            toast.error("Bạn chưa đăng nhập.")
+            router.push('/login')
+            return
+        }
+
+        setIsSubmittingService(true)
+        try {
+            if (isEditingService && selectedService) {
+                await adminApi.updateService(token, selectedService.id, serviceForm as UpdateServiceDto)
+                toast.success("Cập nhật dịch vụ thành công!")
+            } else {
+                await adminApi.createService(token, serviceForm)
+                toast.success("Tạo dịch vụ thành công!")
+            }
+
+            // Refresh services list
+            fetchServices(token)
+            setIsServiceModalOpen(false)
+            setSelectedService(null)
+        } catch (err) {
+            const errorMessage = err instanceof Error ? err.message : 'Có lỗi xảy ra'
+            toast.error(errorMessage)
+        } finally {
+            setIsSubmittingService(false)
+        }
+    }
+
+    const handleDeleteService = async (serviceId: number) => {
+        if (!confirm('Bạn có chắc chắn muốn xóa dịch vụ này?')) return
+
+        const token = localStorage.getItem('token')
+        if (!token) {
+            toast.error("Bạn chưa đăng nhập.")
+            router.push('/login')
+            return
+        }
+
+        try {
+            await adminApi.deleteService(token, serviceId)
+            toast.success("Xóa dịch vụ thành công!")
+            fetchServices(token)
+        } catch (err) {
+            const errorMessage = err instanceof Error ? err.message : 'Có lỗi xảy ra khi xóa'
+            toast.error(errorMessage)
         }
     }
 
@@ -404,10 +511,11 @@ export default function AdminDashboardPage() {
 
                     {/* Data Tables */}
                     <Tabs defaultValue="bookings" className="space-y-6">
-                        <TabsList className="grid w-full grid-cols-4">
+                        <TabsList className="grid w-full grid-cols-5">
                             <TabsTrigger value="bookings">Đơn hàng</TabsTrigger>
                             <TabsTrigger value="customers">Khách hàng</TabsTrigger>
                             <TabsTrigger value="cleaners">Nhân viên</TabsTrigger>
+                            <TabsTrigger value="services">Dịch vụ</TabsTrigger>
                             {/* <TabsTrigger value="bills">Hóa đơn</TabsTrigger> */}
                         </TabsList>
 
@@ -606,6 +714,75 @@ export default function AdminDashboardPage() {
                             </Card>
                         </TabsContent>
 
+                        {/* Services Tab */}
+                        <TabsContent value="services" className="space-y-4">
+                            <div className="flex justify-between items-center mb-4">
+                                <h3 className="text-lg font-semibold">Quản lý dịch vụ</h3>
+                                <Button onClick={() => handleOpenServiceModal()}>
+                                    <Plus className="h-4 w-4 mr-2" />
+                                    Thêm dịch vụ
+                                </Button>
+                            </div>
+                            <Card>
+                                <CardHeader>
+                                    <CardTitle>Danh sách dịch vụ</CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <Table>
+                                        <TableHeader>
+                                            <TableRow>
+                                                <TableHead>ID</TableHead>
+                                                <TableHead>Icon</TableHead>
+                                                <TableHead>Tên dịch vụ</TableHead>
+                                                <TableHead>Mô tả</TableHead>
+                                                <TableHead>Giá cơ bản</TableHead>
+                                                <TableHead>Thời gian</TableHead>
+                                                <TableHead>Trạng thái</TableHead>
+                                                <TableHead>Thao tác</TableHead>
+                                            </TableRow>
+                                        </TableHeader>
+                                        <TableBody>
+                                            {services && services.length > 0 ? services.map((service) => (
+                                                <TableRow key={service.id}>
+                                                    <TableCell>#{service.id}</TableCell>
+                                                    <TableCell>
+                                                        <span className="text-2xl">{service.icon || '🏠'}</span>
+                                                    </TableCell>
+                                                    <TableCell className="font-medium">{service.name}</TableCell>
+                                                    <TableCell className="max-w-xs truncate">
+                                                        {service.description || 'Không có mô tả'}
+                                                    </TableCell>
+                                                    <TableCell>{service.basePrice.toLocaleString('vi-VN')} VNĐ</TableCell>
+                                                    <TableCell>{service.duration || 'N/A'}</TableCell>
+                                                    <TableCell>
+                                                        <Badge variant={service.isActive ? 'default' : 'secondary'}>
+                                                            {service.isActive ? 'Hoạt động' : 'Không hoạt động'}
+                                                        </Badge>
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        <div className="flex gap-2">
+                                                            <Button variant="ghost" size="sm" onClick={() => handleOpenServiceModal(service)}>
+                                                                <Edit className="h-4 w-4" />
+                                                            </Button>
+                                                            <Button variant="ghost" size="sm" onClick={() => handleDeleteService(service.id)}>
+                                                                <Trash2 className="h-4 w-4 text-red-500" />
+                                                            </Button>
+                                                        </div>
+                                                    </TableCell>
+                                                </TableRow>
+                                            )) : (
+                                                <TableRow>
+                                                    <TableCell colSpan={8} className="text-center py-8 text-gray-500">
+                                                        Chưa có dữ liệu dịch vụ
+                                                    </TableCell>
+                                                </TableRow>
+                                            )}
+                                        </TableBody>
+                                    </Table>
+                                </CardContent>
+                            </Card>
+                        </TabsContent>
+
                         {/* Bills Tab */}
                         <TabsContent value="bills" className="space-y-4">
                             <Card>
@@ -764,6 +941,83 @@ export default function AdminDashboardPage() {
                             </div>
                             <DialogFooter>
                                 <Button variant="outline" onClick={() => setIsBookingDetailModalOpen(false)}>Đóng</Button>
+                            </DialogFooter>
+                        </DialogContent>
+                    </Dialog>
+
+                    {/* Service Modal */}
+                    <Dialog open={isServiceModalOpen} onOpenChange={setIsServiceModalOpen}>
+                        <DialogContent className="max-w-md">
+                            <DialogHeader>
+                                <DialogTitle>
+                                    {isEditingService ? 'Chỉnh sửa dịch vụ' : 'Thêm dịch vụ mới'}
+                                </DialogTitle>
+                                <DialogDescription>
+                                    {isEditingService ? 'Cập nhật thông tin dịch vụ.' : 'Tạo dịch vụ mới cho hệ thống.'}
+                                </DialogDescription>
+                            </DialogHeader>
+                            <div className="space-y-4 py-4">
+                                <div>
+                                    <label className="text-sm font-medium">Tên dịch vụ *</label>
+                                    <Input
+                                        value={serviceForm.name}
+                                        onChange={(e) => setServiceForm({ ...serviceForm, name: e.target.value })}
+                                        placeholder="Nhập tên dịch vụ"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="text-sm font-medium">Mô tả</label>
+                                    <Textarea
+                                        value={serviceForm.description}
+                                        onChange={(e) => setServiceForm({ ...serviceForm, description: e.target.value })}
+                                        placeholder="Nhập mô tả dịch vụ"
+                                        rows={3}
+                                    />
+                                </div>
+                                <div>
+                                    <label className="text-sm font-medium">Giá cơ bản (VNĐ) *</label>
+                                    <Input
+                                        type="number"
+                                        value={serviceForm.basePrice}
+                                        onChange={(e) => setServiceForm({ ...serviceForm, basePrice: parseFloat(e.target.value) || 0 })}
+                                        placeholder="Nhập giá cơ bản"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="text-sm font-medium">Thời gian</label>
+                                    <Input
+                                        value={serviceForm.duration}
+                                        onChange={(e) => setServiceForm({ ...serviceForm, duration: e.target.value })}
+                                        placeholder="VD: 2-4 giờ"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="text-sm font-medium">Icon (Emoji)</label>
+                                    <Input
+                                        value={serviceForm.icon}
+                                        onChange={(e) => setServiceForm({ ...serviceForm, icon: e.target.value })}
+                                        placeholder="🏠"
+                                    />
+                                </div>
+                                <div className="flex items-center space-x-2">
+                                    <Switch
+                                        id="isActive"
+                                        checked={serviceForm.isActive}
+                                        onCheckedChange={(checked) => setServiceForm({ ...serviceForm, isActive: checked })}
+                                    />
+                                    <label htmlFor="isActive" className="text-sm font-medium">
+                                        Dịch vụ hoạt động
+                                    </label>
+                                </div>
+                            </div>
+                            <DialogFooter>
+                                <Button variant="outline" onClick={() => setIsServiceModalOpen(false)}>
+                                    Hủy
+                                </Button>
+                                <Button onClick={handleSubmitService} disabled={isSubmittingService || !serviceForm.name || serviceForm.basePrice <= 0}>
+                                    {isSubmittingService && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                                    {isEditingService ? 'Cập nhật' : 'Tạo'}
+                                </Button>
                             </DialogFooter>
                         </DialogContent>
                     </Dialog>

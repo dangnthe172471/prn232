@@ -64,6 +64,35 @@ export interface BillDto {
     createdAt: string;
 }
 
+export interface ServiceDto {
+    id: number;
+    name: string;
+    description?: string;
+    basePrice: number;
+    duration?: string;
+    icon?: string;
+    isActive: boolean;
+    createdAt?: string;
+}
+
+export interface CreateServiceDto {
+    name: string;
+    description?: string;
+    basePrice: number;
+    duration?: string;
+    icon?: string;
+    isActive: boolean;
+}
+
+export interface UpdateServiceDto {
+    name: string;
+    description?: string;
+    basePrice: number;
+    duration?: string;
+    icon?: string;
+    isActive: boolean;
+}
+
 export const adminApi = {
     getDashboardStats: async (token: string): Promise<AdminDashboardStatsDto> => {
         const response = await fetch(`${API_BASE_URL}/api/admin/dashboard-stats`, {
@@ -224,5 +253,76 @@ export const adminApi = {
         }
 
         return response.json();
+    },
+
+    // Service Management
+    getAllServices: async (token: string): Promise<ServiceDto[]> => {
+        const response = await fetch(`${API_BASE_URL}/api/referencedata/services/all`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Có lỗi xảy ra khi lấy danh sách dịch vụ.');
+        }
+
+        return response.json();
+    },
+
+    createService: async (token: string, serviceData: CreateServiceDto): Promise<ServiceDto> => {
+        const response = await fetch(`${API_BASE_URL}/api/referencedata/services`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(serviceData),
+        });
+
+        if (!response.ok) {
+            throw new Error('Có lỗi xảy ra khi tạo dịch vụ.');
+        }
+
+        return response.json();
+    },
+
+    updateService: async (token: string, id: number, serviceData: UpdateServiceDto): Promise<ServiceDto> => {
+        const response = await fetch(`${API_BASE_URL}/api/referencedata/services/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(serviceData),
+        });
+
+        if (!response.ok) {
+            if (response.status === 404) {
+                throw new Error('Không tìm thấy dịch vụ.');
+            }
+            throw new Error('Có lỗi xảy ra khi cập nhật dịch vụ.');
+        }
+
+        return response.json();
+    },
+
+    deleteService: async (token: string, id: number): Promise<void> => {
+        const response = await fetch(`${API_BASE_URL}/api/referencedata/services/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            if (response.status === 404) {
+                throw new Error('Không tìm thấy dịch vụ.');
+            }
+            throw new Error('Có lỗi xảy ra khi xóa dịch vụ.');
+        }
     },
 }; 

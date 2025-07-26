@@ -336,55 +336,5 @@ namespace API.Services
             await _context.SaveChangesAsync();
             return true;
         }
-
-        // Analytics
-        public async Task<IEnumerable<TopCustomerDto>> GetTopCustomersAsync(int limit = 10)
-        {
-            return await _context.Users
-                .Where(u => u.Role == "user")
-                .Select(u => new TopCustomerDto
-                {
-                    Id = u.Id,
-                    Name = u.Name,
-                    Email = u.Email,
-                    Phone = u.Phone,
-                    TotalBookings = u.Bookings.Count(),
-                    TotalSpent = u.Bookings.Where(b => b.Status == "completed").Sum(b => b.TotalPrice),
-                    LastBookingDate = u.Bookings.OrderByDescending(b => b.CreatedAt).FirstOrDefault().CreatedAt ?? DateTime.MinValue,
-                    CreatedAt = u.CreatedAt
-                })
-                .Where(c => c.TotalBookings > 0)
-                .OrderByDescending(c => c.TotalBookings)
-                .ThenByDescending(c => c.TotalSpent)
-                .Take(limit)
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<TopCleanerDto>> GetTopCleanersAsync(int limit = 10)
-        {
-            return await _context.Users
-                .Where(u => u.Role == "cleaner")
-                .Select(u => new TopCleanerDto
-                {
-                    Id = u.Id,
-                    Name = u.Name,
-                    Email = u.Email,
-                    Phone = u.Phone,
-                    TotalBookings = u.BookingCleaners.Count(),
-                    CompletedBookings = u.BookingCleaners.Where(b => b.Status == "completed").Count(),
-                    TotalEarnings = u.BookingCleaners.Where(b => b.Status == "completed").Sum(b => b.TotalPrice),
-                    AverageRating = u.BookingCleaners
-                        .Where(b => b.Status == "completed" && b.Reviews.Any())
-                        .SelectMany(b => b.Reviews)
-                        .Average(r => r.Rating) ?? 0,
-                    LastBookingDate = u.BookingCleaners.OrderByDescending(b => b.CreatedAt).FirstOrDefault().CreatedAt ?? DateTime.MinValue,
-                    CreatedAt = u.CreatedAt
-                })
-                .Where(c => c.TotalBookings > 0)
-                .OrderByDescending(c => c.CompletedBookings)
-                .ThenByDescending(c => c.TotalEarnings)
-                .Take(limit)
-                .ToListAsync();
-        }
     }
 } 
